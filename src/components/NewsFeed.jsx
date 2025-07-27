@@ -5,17 +5,23 @@ import NewsCard from "./NewsCard";
 function NewsFeed() {
   const [articles, setArticles] = useState([]);
 
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const formatted = yesterday.toISOString().split("T")[0];
+
   useEffect(() => {
     async function fetchNews() {
       try {
-        const token = import.meta.env.VITE_FINNHUB_KEY;
+        const token = import.meta.env.VITE_MARKETAUX_KEY;
         const res = await fetch(
-          `https://finnhub.io/api/v1/news?category=general&token=${token}`
+          `https://api.marketaux.com/v1/news/all?countries=ca,us&published_after=${formatted}&filter_entities=true&api_token=${token}&language=en`
         );
         const data = await res.json();
-        setArticles(data);
+        setArticles(Array.isArray(data.data) ? data.data : []);
       } catch (err) {
         console.error("Error fetching news:", err);
+        setArticles([]); // ensure articles is always an array
       }
     }
     fetchNews();

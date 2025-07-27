@@ -24,7 +24,19 @@ function Content() {
         <NewsFeed />
       </div>
       <div className="col-span-1 bg-white shadow-md border border-gray-500 rounded-lg p-4">
-        <h2 className="w-full mb-5">Live Prices</h2>
+        <div className="flex flex-row justify-between items-center mb-4">
+          <h2 className="w-full ">Live Prices</h2>
+          <div className="rounded-full w-fit border-none appearance-none bg-gray-200 text-sm py-1 px-2">
+            <select
+              className="border-none focus:outline-none focus:ring-0"
+              name="categories"
+              id="categories"
+            >
+              <option value="general">Stocks</option>
+              <option value="crypto">Crypto</option>
+            </select>
+          </div>
+        </div>
         <PriceFeed />
       </div>
     </div>
