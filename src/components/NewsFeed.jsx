@@ -15,7 +15,7 @@ function NewsFeed() {
       try {
         const token = import.meta.env.VITE_MARKETAUX_KEY;
         const res = await fetch(
-          `https://api.marketaux.com/v1/news/all?countries=ca,us&published_after=${formatted}&filter_entities=true&api_token=${token}&language=en`
+          `https://api.marketaux.com/v1/news/all?countries=ca,us&must_have_entities=true&published_on=${formatted}&filter_entities=true&api_token=${token}&language=en`
         );
         const data = await res.json();
         setArticles(Array.isArray(data.data) ? data.data : []);
