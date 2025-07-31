@@ -76,7 +76,8 @@ function Footer() {
           </a>
         </div>
       </div>
-      <div className="flex flex-row items-center text-white text-xs">
+      <div className="flex flex-col gap-4 text-white text-xs">
+        <a href="https://logo.dev">Logos provided by Logo.dev</a>
         <p>©{year} Market Cardinal Copyright All Rights Reserved.</p>
       </div>
     </div>

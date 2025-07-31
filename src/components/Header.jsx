@@ -3,9 +3,12 @@ import React from "react";
 function Header() {
   return (
     <div className="flex flex-row items-center justify-between bg-black min-w-screen h-20 px-6">
-      <h1 className="font-heading text-white text-3xl font-bold">
-        Market Cardinal
-      </h1>
+      <a href="#">
+        <h1 className="font-heading text-white text-3xl font-bold">
+          Market Cardinal
+        </h1>
+      </a>
+
       <div className="flex flex-row items-center justify-center gap-10 text-white ">
         <a
           href="#"

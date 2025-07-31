@@ -3,7 +3,7 @@ import PriceCard from "./PriceCard";
 
 function PriceFeed() {
   const [stocks, setStocks] = useState([]);
-  const symbols = ["AAPL", "TSLA", "MSFT", "AMZN", "AVGO", "META"];
+  const symbols = ["AAPL", "TSLA", "MSFT", "AMZN", "AVGO", "META", "NVDA"];
 
   useEffect(() => {
     async function fetchStocks() {
