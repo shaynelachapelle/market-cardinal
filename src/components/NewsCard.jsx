@@ -12,9 +12,6 @@ function NewsCard({ article }) {
     >
       <div className="flex flex-col justify-between h-58">
         <div className="flex flex-col gap-3">
-          <p className="rounded-full w-fit bg-gray-200 text-xs py-1 px-2">
-            {article.entities[0].industry}
-          </p>
           <h3 className="font-semibold text-lg max-w-xl">{article.title}</h3>
           <p className="text-gray-700 text-sm max-w-xl line-clamp-3 mt-1">
             {article.description}
@@ -43,7 +40,7 @@ function NewsCard({ article }) {
       <div className="flex flex-col items-center justify-center h-full max-w-1/2">
         <img
           className="w-58 h-58 md:w-96 object-cover rounded-md"
-          src={article.image_url}
+          src={article.image}
           alt={article.title}
         />
       </div>

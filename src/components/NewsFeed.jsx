@@ -1,9 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { supabase } from "../supabase-client.js";
 import NewsCard from "./NewsCard";
 
 function NewsFeed() {
   const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -11,21 +13,24 @@ function NewsFeed() {
   const formatted = yesterday.toISOString().split("T")[0];
 
   useEffect(() => {
-    async function fetchNews() {
-      try {
-        const token = import.meta.env.VITE_MARKETAUX_KEY;
-        const res = await fetch(
-          `https://api.marketaux.com/v1/news/all?countries=ca,us&must_have_entities=true&published_on=${formatted}&filter_entities=true&api_token=${token}&language=en`
-        );
-        const data = await res.json();
-        setArticles(Array.isArray(data.data) ? data.data : []);
-      } catch (err) {
-        console.error("Error fetching news:", err);
-        setArticles([]); // ensure articles is always an array
+    async function fetchArticles() {
+      const { data, error } = await supabase
+        .from("articles")
+        .select("*")
+        .order("published_at", { ascending: false })
+        .limit(10);
+
+      if (error) {
+        console.error("Error fetching articles: ", error);
+      } else {
+        setArticles(data);
       }
+      setLoading(false);
     }
-    fetchNews();
+    fetchArticles();
   }, []);
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="flex flex-col gap-4">

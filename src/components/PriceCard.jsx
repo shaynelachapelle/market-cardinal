@@ -13,7 +13,7 @@ function PriceCard({ stock }) {
 
   const logo = `https://img.logo.dev/ticker/${stock.symbol}?token=${
     import.meta.env.VITE_LOGODEV_KEY
-  }&size=128`;
+  }&size=128&retina=true`;
 
   return (
     <a
