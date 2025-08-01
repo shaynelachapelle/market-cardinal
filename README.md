@@ -7,8 +7,10 @@ Designed for both active investors and curious beginners, it offers a clean, use
 
 ## Tech Stack 💻
 
-- Frontend: React, TailwindCSS
-- Backend: Node.js, JavaScript, Supabase (PostgreSQL)
+- **Frontend:** React, TailwindCSS, HTML/CSS  
+- **Backend:** supabase (PostgreSQL, Edge Functions), Node.js  
+- **Languages:** JavaScript  
+
 ## Authors ✏️
 
 - [@shaynelachapelle](https://github.com/shaynelachapelle)
