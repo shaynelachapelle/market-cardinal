@@ -1,26 +1,36 @@
 import React from "react";
+import { useTheme } from "./ThemeContext";
 
 function NewsCard({ article }) {
   const displayTime = timeAgo(article.published_at);
+  const { theme, setTheme } = useTheme();
 
   return (
     <a
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex flex-row justify-between items-start gap-4 border border-gray-300 shadow-sm rounded-md p-4 hover:shadow-md transition cursor-pointer"
+      className={`flex flex-row justify-between items-start gap-4 bg-bg-light border border-border-muted shadow-sm rounded-md p-4 hover:shadow-md transition duration-200 cursor-pointer ${
+        theme === "dark"
+          ? "shadow-white shadow-xs hover:shadow-sm"
+          : "shadow-sm"
+      }`}
     >
       <div className="flex flex-col justify-between h-58">
         <div className="flex flex-col gap-3">
-          <h3 className="font-semibold text-lg max-w-xl">{article.title}</h3>
-          <p className="text-gray-700 text-sm max-w-xl line-clamp-3 mt-1">
+          <h3 className="font-semibold text-text text-lg max-w-xl">
+            {article.title}
+          </h3>
+          <p className="text-sm text-text-muted max-w-xl line-clamp-3 mt-1">
             {article.description}
           </p>
-          <p className="text-gray-700 text-xs">{article.source}</p>
+          <p className="text-text-muted font-light text-xs mt-2">
+            {article.source}
+          </p>
         </div>
 
         <div className="flex flex-col justify-between max-w-xl gap-4">
-          <p className="flex flex-row items-center gap-2 text-gray-700 text-xs">
+          <p className="flex flex-row items-center gap-2 text-text-muted font-light text-xs">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"

@@ -1,6 +1,9 @@
 import React from "react";
+import { useTheme } from "./ThemeContext";
 
 function PriceCard({ stock }) {
+  const { theme, setTheme } = useTheme();
+
   const SYMBOL_MAP = {
     AAPL: "Apple Inc.",
     TSLA: "Tesla Inc.",
@@ -13,22 +16,28 @@ function PriceCard({ stock }) {
 
   const logo = `https://img.logo.dev/ticker/${stock.symbol}?token=${
     import.meta.env.VITE_LOGODEV_KEY
-  }&size=128&retina=true`;
+  }&size=128&retina=true&format=png&theme=${
+    theme === "dark" ? "dark" : "light"
+  }`;
 
   return (
     <a
       href="#"
       target="_blank"
       rel="noopener noreferrer"
-      className="border border-gray-300 shadow-sm rounded-md p-4 hover:shadow-md transition cursor-pointer"
+      className={`border border-border-muted bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition cursor-pointer duration-200 ${
+        theme === "dark"
+          ? "shadow-white shadow-xs hover:shadow-sm"
+          : "shadow-sm"
+      }`}
     >
-      <div className="flex flex-row justify-between gap-4">
-        <div className="flex flex-row justify-center items-center gap-4">
-          <div className="flex w-8 h-8">
+      <div className="flex flex-row justify-between gap-4 ">
+        <div className="flex flex-row justify-center  items-center gap-4">
+          <div className="flex w-8 h-8 bg-none">
             <img className="rounded-xl" src={logo} />
           </div>
           <div className="flex flex-col text-left gap-1">
-            <h3 className="flex flex-row items-center gap-2 font-semibold">
+            <h3 className="flex flex-row items-center gap-2 text-text font-semibold">
               {stock.symbol}{" "}
               {stock.change > 0 ? (
                 <svg
@@ -58,18 +67,18 @@ function PriceCard({ stock }) {
                 </svg>
               )}
             </h3>
-            <p className="text-gray-700 font-light text-sm">
+            <p className="text-text-muted font-light text-sm">
               {SYMBOL_MAP[stock.symbol]}
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col text-right font-mono">
+        <div className="flex flex-col text-right text-text font-mono">
           <h3 className="font-semibold">${stock.current.toFixed(2)}</h3>
           <p className={stock.change > 0 ? "text-green-500" : "text-red-500"}>
             {stock.change} ({stock.percentChange}%)
           </p>
-          <div className="text-gray-700 text-xs">
+          <div className="text-text-muted text-xs">
             <p>Vol: {stock.volume}</p>
           </div>
         </div>

@@ -2,11 +2,44 @@
 @custom-variant hover (&:hover);
 
 body {
-  @apply bg-gray-50;
+  @apply bg-bg-dark;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+@theme {
+  --color-bg-dark: var(--bg-dark);
+  --color-bg: var(--bg);
+  --color-bg-light: var(--bg-light);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-highlight: var(--highlight);
+  --color-border: var(--border);
+  --color-border-muted: var(--border-muted);
+}
+
+:root {
+  --bg-dark: oklch(0.92 0 340);
+  --bg: oklch(0.96 0 340);
+  --bg-light: oklch(1 0 340);
+  --text: oklch(0.15 0 340);
+  --text-muted: oklch(0.4 0 340);
+  --highlight: oklch(1 0 340);
+  --border: oklch(0.6 0 340);
+  --border-muted: oklch(0.7 0 340);
+}
+
+.dark {
+  --bg-dark: oklch(0.1 0 340);
+  --bg: oklch(0.15 0 340);
+  --bg-light: oklch(0.2 0 340);
+  --text: oklch(0.96 0 340);
+  --text-muted: oklch(0.76 0 340);
+  --highlight: oklch(0.5 0 340);
+  --border: oklch(0.4 0 340);
+  --border-muted: oklch(0.3 0 340);
 }

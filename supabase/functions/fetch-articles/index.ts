@@ -24,15 +24,19 @@ async function getOGImage(url: string): Promise<string | null> {
 
 const feeds = [
   { source: "CNBC", url: "https://www.cnbc.com/id/100003114/device/rss/rss.html" },
-  { source: "MarketWatch", url: "https://feeds.content.dowjones.io/public/rss/mw_topstories" }
+  { source: "MarketWatch", url: "https://feeds.content.dowjones.io/public/rss/mw_topstories" },
+  { source: "The New York Times", url:"https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml"},
+  { source: "NASDAQ", url:"https://www.nasdaq.com/feed/rssoutbound?category=Markets"},
+  { source: "NASDAQ", url: "https://www.nasdaq.com/feed/rssoutbound?category=Cryptocurrencies"},
+  { source: "The Wall Street Journal", url: "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain"}
 ];
 
 
 Deno.serve(async () => {
   try {
     const parser = new XMLParser({ ignoreAttributes: false, processEntities: true });
-    const limit = pLimit(5);
-    const maxArticles = 5;
+    const limit = pLimit(2);
+    const maxArticles = 2;
 
     const allItems: any[] = [];
 
