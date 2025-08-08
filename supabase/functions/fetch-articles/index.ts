@@ -80,17 +80,26 @@ Deno.serve(async () => {
       }
     }
 
-    const { error } = await supabase
-      .from("articles")
-      .upsert(allItems, { onConflict: "url" });
+    // Remove rows with any null/empty string fields
+    const validItems = allItems.filter(item =>
+      Object.values(item).every(
+        val => val !== null && val !== ""
+      )
+    );
 
-    if (error) {
-      console.error("DB error:", error);
-      return new Response(JSON.stringify({ success: false, error }), { status: 500 });
+    if (validItems.length > 0) {
+      const { error } = await supabase
+        .from("articles")
+        .upsert(validItems, { onConflict: "url" });
+
+      if (error) {
+        console.error("DB error:", error);
+        return new Response(JSON.stringify({ success: false, error }), { status: 500 });
+      }
     }
 
     return new Response(
-      JSON.stringify({ success: true, count: allItems.length }),
+      JSON.stringify({ success: true, count: validItems.length }),
       { headers: { "Content-Type": "application/json" } }
     );
   } catch (err) {

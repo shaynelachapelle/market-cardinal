@@ -1,61 +1,54 @@
 import React, { useState, useEffect } from "react";
 import PriceCard from "./PriceCard";
+import { supabase } from "../supabase-client.js";
+import PriceCardSkeleton from "./PriceCardSkeleton.jsx";
 
 function PriceFeed() {
-  const [stocks, setStocks] = useState([]);
-  const symbols = ["AAPL", "TSLA", "MSFT", "AMZN", "AVGO", "META", "NVDA"];
+  const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchStocks() {
-      try {
-        const res = await fetch(
-          `https://data.alpaca.markets/v2/stocks/snapshots?symbols=${symbols.join(
-            ","
-          )}`,
-          {
-            headers: {
-              "APCA-API-KEY-ID": import.meta.env.VITE_ALPACA_KEY,
-              "APCA-API-SECRET-KEY": import.meta.env.VITE_ALPACA_SECRET,
-            },
-          }
-        );
-        const data = await res.json();
+    async function fetchAssets() {
+      const { data, error } = await supabase
+        .from("prices")
+        .select("*")
+        .order("volume", { ascending: false })
+        .limit(10);
 
-        const processed = symbols
-          .map((symbol) => {
-            const s = data[symbol];
-            if (!s?.latestTrade || !s?.prevDailyBar) return null;
+      console.log(data);
 
-            const current = s.latestTrade.p;
-            const prevClose = s.prevDailyBar.c;
-            const change = current - prevClose;
-            const percentChange = ((change / prevClose) * 100).toFixed(2);
-
-            return {
-              symbol,
-              current,
-              change: change.toFixed(2),
-              percentChange,
-              volume: s.dailyBar?.v || 0,
-            };
-          })
-          .filter(Boolean);
-
-        setStocks(processed);
-      } catch (err) {
-        console.error("Error fetching stocks:", err);
+      if (error) {
+        console.error("Error fetching assets: ", error);
+      } else {
+        console.log(data);
+        setAssets(data);
       }
+      setLoading(false);
     }
-    fetchStocks();
-    const interval = setInterval(fetchStocks, 1000); // update every 1s
+    fetchAssets();
+    const interval = setInterval(fetchAssets, 1000);
 
-    return () => clearInterval(interval); // cleanup when component unmounts
+    return () => clearInterval(interval);
   }, []);
+
+  if (loading)
+    return (
+      <div className="flex flex-col gap-4">
+        <PriceCardSkeleton />
+        <PriceCardSkeleton />
+        <PriceCardSkeleton />
+        <PriceCardSkeleton />
+        <PriceCardSkeleton />
+        <PriceCardSkeleton />
+        <PriceCardSkeleton />
+        <PriceCardSkeleton />
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-4">
-      {stocks.map((stock, idx) => (
-        <PriceCard key={stock.symbol} stock={stock} />
+      {assets.map((asset, idx) => (
+        <PriceCard key={asset.symbol} asset={asset} />
       ))}
     </div>
   );

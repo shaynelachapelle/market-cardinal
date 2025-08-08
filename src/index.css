@@ -1,4 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Plus+Jakarta+Sans:wght@500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
 @import "tailwindcss";
+
 @custom-variant hover (&:hover);
 
 body {
@@ -42,4 +44,9 @@ body {
   --highlight: oklch(0.5 0 340);
   --border: oklch(0.4 0 340);
   --border-muted: oklch(0.3 0 340);
+}
+
+.skeleton {
+  opacity: 0.7;
+  @apply animate-pulse;
 }

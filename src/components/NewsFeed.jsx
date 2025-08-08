@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { supabase } from "../supabase-client.js";
 import NewsCard from "./NewsCard";
+import NewsCardSkeleton from "./NewsCardSkeleton.jsx";
 
 function NewsFeed() {
   const [articles, setArticles] = useState([]);
@@ -30,7 +31,16 @@ function NewsFeed() {
     fetchArticles();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="flex flex-col gap-4">
+        <NewsCardSkeleton />
+        <NewsCardSkeleton />
+        <NewsCardSkeleton />
+        <NewsCardSkeleton />
+        <NewsCardSkeleton />
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-4">

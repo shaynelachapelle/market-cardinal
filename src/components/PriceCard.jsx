@@ -1,20 +1,10 @@
 import React from "react";
 import { useTheme } from "./ThemeContext";
 
-function PriceCard({ stock }) {
+function PriceCard({ asset }) {
   const { theme, setTheme } = useTheme();
 
-  const SYMBOL_MAP = {
-    AAPL: "Apple Inc.",
-    TSLA: "Tesla Inc.",
-    MSFT: "Microsoft Corp.",
-    AMZN: "Amazon.com Inc.",
-    META: "Meta Platforms Inc.",
-    AVGO: "Broadcom Inc.",
-    NVDA: "NVIDIA Corp",
-  };
-
-  const logo = `https://img.logo.dev/ticker/${stock.symbol}?token=${
+  const logo = `https://img.logo.dev/ticker/${asset.symbol}?token=${
     import.meta.env.VITE_LOGODEV_KEY
   }&size=128&retina=true&format=png&theme=${
     theme === "dark" ? "dark" : "light"
@@ -38,8 +28,8 @@ function PriceCard({ stock }) {
           </div>
           <div className="flex flex-col text-left gap-1">
             <h3 className="flex flex-row items-center gap-2 text-text font-semibold">
-              {stock.symbol}{" "}
-              {stock.change > 0 ? (
+              {asset.symbol}{" "}
+              {asset.change > 0 ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -67,19 +57,17 @@ function PriceCard({ stock }) {
                 </svg>
               )}
             </h3>
-            <p className="text-text-muted font-light text-sm">
-              {SYMBOL_MAP[stock.symbol]}
-            </p>
+            <p className="text-text-muted font-light text-sm">{asset.name}</p>
           </div>
         </div>
 
         <div className="flex flex-col text-right text-text font-mono">
-          <h3 className="font-semibold">${stock.current.toFixed(2)}</h3>
-          <p className={stock.change > 0 ? "text-green-500" : "text-red-500"}>
-            {stock.change} ({stock.percentChange}%)
+          <h3 className="font-semibold">${asset.price.toFixed(2)}</h3>
+          <p className={asset.change > 0 ? "text-green-500" : "text-red-500"}>
+            {asset.change.toFixed(2)} ({asset.percent_change.toFixed(2)}%)
           </p>
           <div className="text-text-muted text-xs">
-            <p>Vol: {stock.volume}</p>
+            <p>Vol: {asset.volume}</p>
           </div>
         </div>
       </div>
