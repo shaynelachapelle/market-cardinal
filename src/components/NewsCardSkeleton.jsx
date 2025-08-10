@@ -6,18 +6,18 @@ function NewsCardSkeleton() {
 
   return (
     <div
-      className={`flex flex-row skeleton justify-between items-start gap-4 bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition duration-200 cursor-pointer ${
+      className={`flex flex-row max-w-full skeleton justify-between items-start gap-4 bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition duration-200 cursor-pointer ${
         theme === "dark"
           ? "shadow-white shadow-xs hover:shadow-sm"
           : "shadow-sm"
       }`}
     >
-      <div className="flex flex-col justify-between h-58 skeleton">
+      <div className="flex flex-col justify-between h-58 w-full skeleton">
         <div className="flex flex-col gap-3">
-          <div className="min-w-2xl h-4 rounded bg-text"></div>
-          <div className="h-4 rounded text-sm bg-text-muted max-w-xl mt-2"></div>
-          <div className="h-4 rounded text-sm bg-text-muted max-w-lg"></div>
-          <div className="h-4 rounded text-sm bg-text-muted max-w-md"></div>
+          <div className="max-w-2xl h-4 rounded bg-text"></div>
+          <div className="h-4 rounded text-sm bg-text-muted max-w-3/4 mt-2"></div>
+          <div className="h-4 rounded text-sm bg-text-muted max-w-1/2"></div>
+          <div className="h-4 rounded text-sm bg-text-muted max-w-1/4"></div>
 
           <div className="bg-text-muted h-2 w-40 rounded font-light text-xs mt-4"></div>
         </div>

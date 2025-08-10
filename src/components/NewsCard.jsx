@@ -1,7 +1,9 @@
 import React from "react";
+import { useState } from "react";
 import { useTheme } from "./ThemeContext";
 
 function NewsCard({ article }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const displayTime = timeAgo(article.published_at);
   const { theme, setTheme } = useTheme();
 
@@ -47,11 +49,17 @@ function NewsCard({ article }) {
           </p>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-full max-w-1/2">
+      <div className="relative flex flex-col items-center justify-center h-full max-w-1/2">
+        {!imageLoaded && (
+          <div className="absolute inset-0 max-w-58 h-58 md:max-w-96 rounded-md bg-text-muted skeleton"></div>
+        )}
         <img
-          className="w-58 h-58 md:w-96 object-cover rounded-md"
+          className={`max-w-58 h-58 md:max-w-96 object-cover rounded-md transition-opacity duration-500 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
           src={article.image}
           alt={article.title}
+          onLoad={() => setImageLoaded(true)}
         />
       </div>
     </a>

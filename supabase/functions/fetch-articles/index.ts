@@ -1,9 +1,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { XMLParser } from "https://esm.sh/fast-xml-parser@4";
 import * as cheerio from "https://esm.sh/cheerio@1";
+import { load as cheerioLoad } from "https://esm.sh/cheerio@1";
 import pLimit from "https://esm.sh/p-limit@3";
 import he from "https://esm.sh/he@1.2.0";
-
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -22,19 +22,57 @@ async function getOGImage(url: string): Promise<string | null> {
   }
 }
 
-const feeds = [
-  { source: "CNBC", url: "https://www.cnbc.com/id/100003114/device/rss/rss.html" },
-  { source: "MarketWatch", url: "https://feeds.content.dowjones.io/public/rss/mw_topstories" },
-  { source: "The New York Times", url:"https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml"},
-  { source: "NASDAQ", url:"https://www.nasdaq.com/feed/rssoutbound?category=Markets"},
-  { source: "NASDAQ", url: "https://www.nasdaq.com/feed/rssoutbound?category=Cryptocurrencies"},
-  { source: "The Wall Street Journal", url: "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain"}
-];
+function cleanDescription(rawDescription) {
+  if (!rawDescription) return null;
+  const $ = cheerioLoad(rawDescription);
+  const text = $.text();
+  return he.decode(text.trim());
+}
 
+const feeds = [
+  {
+    source: "CNBC",
+    url: "https://www.cnbc.com/id/100003114/device/rss/rss.html",
+    category: "general",
+  },
+  {
+    source: "Federal Reserve Board",
+    url: "https://www.federalreserve.gov/feeds/press_all.xml",
+    category: "general",
+  },
+  {
+    source: "The New York Times",
+    url: "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml",
+    category: "general",
+  },
+  {
+    source: "The Wall Street Journal",
+    url: "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
+    category: "general",
+  },
+  {
+    source: "Cointelegraph",
+    url: "https://cointelegraph.com/rss",
+    category: "crypto",
+  },
+  {
+    source: "CoinDesk",
+    url: "https://www.coindesk.com/arc/outboundfeeds/rss",
+    category: "crypto",
+  },
+  {
+    source: "Blockchain.News",
+    url: "https://blockchain.news/RSS/",
+    category: "crypto",
+  },
+];
 
 Deno.serve(async () => {
   try {
-    const parser = new XMLParser({ ignoreAttributes: false, processEntities: true });
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      processEntities: true,
+    });
     const limit = pLimit(2);
     const maxArticles = 2;
 
@@ -65,10 +103,11 @@ Deno.serve(async () => {
               return {
                 title: he.decode(i.title),
                 url: i.link,
-                description: he.decode(i.description),
+                description: cleanDescription(i.description),
                 image,
                 source: feed.source,
-                published_at: i.pubDate ? new Date(i.pubDate) : null
+                published_at: i.pubDate ? new Date(i.pubDate) : null,
+                category: feed.category,
               };
             })
           )
@@ -81,10 +120,8 @@ Deno.serve(async () => {
     }
 
     // Remove rows with any null/empty string fields
-    const validItems = allItems.filter(item =>
-      Object.values(item).every(
-        val => val !== null && val !== ""
-      )
+    const validItems = allItems.filter((item) =>
+      Object.values(item).every((val) => val !== null && val !== "")
     );
 
     if (validItems.length > 0) {
@@ -94,7 +131,9 @@ Deno.serve(async () => {
 
       if (error) {
         console.error("DB error:", error);
-        return new Response(JSON.stringify({ success: false, error }), { status: 500 });
+        return new Response(JSON.stringify({ success: false, error }), {
+          status: 500,
+        });
       }
     }
 
