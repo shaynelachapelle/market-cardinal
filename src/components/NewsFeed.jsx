@@ -3,8 +3,11 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabase-client.js";
 import NewsCard from "./NewsCard";
 import NewsCardSkeleton from "./NewsCardSkeleton.jsx";
+import { useNewsCategory } from "./NewsCategoryContext.jsx";
 
 function NewsFeed() {
+  const { newsCategory, setNewsCategory } = useNewsCategory();
+
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,10 +18,12 @@ function NewsFeed() {
 
   useEffect(() => {
     async function fetchArticles() {
+      //setLoading(true);
       const { data, error } = await supabase
         .from("articles")
         .select("*")
         .order("published_at", { ascending: false })
+        .eq("category", newsCategory.toLowerCase())
         .limit(10);
 
       if (error) {
@@ -29,7 +34,7 @@ function NewsFeed() {
       setLoading(false);
     }
     fetchArticles();
-  }, []);
+  }, [newsCategory]);
 
   if (loading)
     return (

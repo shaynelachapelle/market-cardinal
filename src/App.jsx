@@ -3,12 +3,15 @@ import "./index.css";
 import Header from "./components/Header.jsx";
 import Content from "./components/Content.jsx";
 import Footer from "./components/Footer.jsx";
+import { NewsCategoryProvider } from "./components/NewsCategoryContext.jsx";
 
 function App() {
   return (
     <>
       <Header />
-      <Content />
+      <NewsCategoryProvider>
+        <Content />
+      </NewsCategoryProvider>
       <Footer />
     </>
   );

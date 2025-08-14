@@ -2,9 +2,10 @@ import { useState } from "react";
 import NewsFeed from "./NewsFeed";
 import PriceFeed from "./PriceFeed";
 import Dropdown from "./Dropdown";
+import { useNewsCategory } from "./NewsCategoryContext";
 
 function Content() {
-  const [newsCategory, setNewsCategory] = useState("General");
+  const { newsCategory, setNewsCategory } = useNewsCategory();
   const [priceFilter, setPriceFilter] = useState("Stocks");
 
   return (

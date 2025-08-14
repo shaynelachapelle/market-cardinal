@@ -51,10 +51,10 @@ function NewsCard({ article }) {
       </div>
       <div className="relative flex flex-col items-center justify-center h-full max-w-1/2">
         {!imageLoaded && (
-          <div className="absolute inset-0 max-w-58 h-58 md:max-w-96 rounded-md bg-text-muted skeleton"></div>
+          <div className="absolute inset-0 max-w-58 h-58 md:max-w-96 lg:w-xl rounded-md bg-text-muted skeleton"></div>
         )}
         <img
-          className={`max-w-58 h-58 md:max-w-96 object-cover rounded-md transition-opacity duration-500 ${
+          className={`max-w-58 h-58 md:max-w-96 lg:w-xl object-cover rounded-md transition-opacity duration-500 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           src={article.image}

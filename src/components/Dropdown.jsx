@@ -39,17 +39,19 @@ function Dropdown({ options, selected, onSelect }) {
       </button>
 
       <div
-        className={`absolute mt-2 w-full transform transition-all duration-200 origin-top z-10 ${
+        className={`absolute mt-1 w-full transform transition-all duration-200 origin-top z-10 ${
           isOpen
             ? "opacity-100 scale-100"
             : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <ul className="bg-bg border border-border rounded-lg shadow-lg">
+        <ul className="bg-bg-dark border border-border rounded-lg shadow-lg">
           {options.map((option, index) => (
             <li
               key={index}
-              className="px-4 py-2 hover:bg-bg-light cursor-pointer rounded-lg text-sm text-text-muted transition-colors"
+              className={`px-4 py-2 hover:bg-bg hover:text-text border-b border-border-muted cursor-pointer text-sm text-text-muted transition-colors ${
+                index === 0 ? "rounded-t-lg" : ""
+              } ${index === options.length - 1 ? "rounded-b-lg" : ""}`}
               onClick={() => {
                 onSelect(option);
                 setIsOpen(false);
