@@ -3,10 +3,11 @@ import NewsFeed from "./NewsFeed";
 import PriceFeed from "./PriceFeed";
 import Dropdown from "./Dropdown";
 import { useNewsCategory } from "./NewsCategoryContext";
+import { useAssetCategory } from "./AssetCategoryContext";
 
 function Content() {
   const { newsCategory, setNewsCategory } = useNewsCategory();
-  const [priceFilter, setPriceFilter] = useState("Stocks");
+  const { assetCategory, setAssetCategory } = useAssetCategory();
 
   return (
     <div className="grid grid-cols-3 gap-4 my-4 px-4 min-h-screen">
@@ -29,8 +30,8 @@ function Content() {
           <div className="">
             <Dropdown
               options={["Stocks", "Crypto"]}
-              selected={priceFilter}
-              onSelect={(value) => setPriceFilter(value)}
+              selected={assetCategory}
+              onSelect={(value) => setAssetCategory(value)}
             />
           </div>
         </div>

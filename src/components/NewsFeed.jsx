@@ -13,18 +13,18 @@ function NewsFeed() {
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-
   const formatted = yesterday.toISOString().split("T")[0];
 
+  //initial fetch
   useEffect(() => {
     async function fetchArticles() {
-      //setLoading(true);
+      setLoading(true);
       const { data, error } = await supabase
         .from("articles")
         .select("*")
         .order("published_at", { ascending: false })
         .eq("category", newsCategory.toLowerCase())
-        .limit(10);
+        .limit(8);
 
       if (error) {
         console.error("Error fetching articles: ", error);
@@ -39,11 +39,9 @@ function NewsFeed() {
   if (loading)
     return (
       <div className="flex flex-col gap-4">
-        <NewsCardSkeleton />
-        <NewsCardSkeleton />
-        <NewsCardSkeleton />
-        <NewsCardSkeleton />
-        <NewsCardSkeleton />
+        {Array.from({ length: 5 }).map((_, i) => (
+          <NewsCardSkeleton key={i} />
+        ))}
       </div>
     );
 

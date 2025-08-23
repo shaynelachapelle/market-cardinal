@@ -1,14 +1,32 @@
 import React from "react";
 import { useTheme } from "./ThemeContext";
+import { useAssetCategory } from "./AssetCategoryContext";
 
 function PriceCard({ asset }) {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
+  const { assetCategory } = useAssetCategory();
 
-  const logo = `https://img.logo.dev/ticker/${asset.symbol}?token=${
-    import.meta.env.VITE_LOGODEV_KEY
-  }&size=128&retina=true&format=png&theme=${
-    theme === "dark" ? "dark" : "light"
-  }`;
+  let logo;
+
+  function normalizeTicker(ticker) {
+    return ticker.endsWith("/USD") ? ticker.replace("/USD", "USD") : ticker;
+  }
+
+  if (assetCategory === "Stocks") {
+    logo = `https://img.logo.dev/ticker/${asset.symbol}?token=${
+      import.meta.env.VITE_LOGODEV_KEY
+    }&size=128&retina=true&format=png&theme=${
+      theme === "dark" ? "dark" : "light"
+    }`;
+  } else if (assetCategory === "Crypto") {
+    logo = `https://img.logo.dev/crypto/${normalizeTicker(
+      asset.symbol
+    )}?token=${
+      import.meta.env.VITE_LOGODEV_KEY
+    }&size=128&retina=true&format=png&theme=${
+      theme === "dark" ? "dark" : "light"
+    }`;
+  }
 
   return (
     <a
@@ -62,17 +80,29 @@ function PriceCard({ asset }) {
         </div>
 
         <div className="flex flex-col text-right text-text font-mono">
-          <h3 className="font-semibold">${asset.price.toFixed(2)}</h3>
+          <h3 className="font-semibold">
+            $
+            {formatDollar(
+              assetCategory === "Stocks" ? asset.price.toFixed(2) : asset.price
+            )}
+          </h3>
           <p className={asset.change > 0 ? "text-green-500" : "text-red-500"}>
             {asset.change.toFixed(2)} ({asset.percent_change.toFixed(2)}%)
           </p>
           <div className="text-text-muted text-xs">
-            <p>Vol: {asset.volume}</p>
+            <p>Vol: ${formatDollar(asset.volume)}</p>
           </div>
         </div>
       </div>
     </a>
   );
+}
+
+function formatDollar(amount) {
+  return amount.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 8,
+  });
 }
 
 export default PriceCard;

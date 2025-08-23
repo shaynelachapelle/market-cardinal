@@ -46,6 +46,26 @@ const feeds = [
     category: "general",
   },
   {
+    source: "The Motley Fool",
+    url: "https://www.fool.ca/feed/",
+    category: "general",
+  },
+  {
+    source: "TMX Montreal",
+    url: "https://feeds.feedburner.com/MxCirculars",
+    category: "general",
+  },
+  {
+    source: "Yahoo Finance",
+    url: "https://rss.app/rss-feed?keyword=yahoo%20financ&region=US&lang=en",
+    category: "general",
+  },
+  {
+    source: "The Economist",
+    url: "https://rss.app/feeds/7OsomLor3921CNtX.xml",
+    category: "general",
+  },
+  {
     source: "The Wall Street Journal",
     url: "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
     category: "general",
@@ -80,7 +100,13 @@ Deno.serve(async () => {
 
     for (const feed of feeds) {
       try {
-        const response = await fetch(feed.url);
+        const response = await fetch(feed.url, {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0 Safari/537.36",
+            Accept: "application/xml, text/xml, */*; q=0.01",
+          },
+        });
         const xml = await response.text();
         const parsed = parser.parse(xml);
 

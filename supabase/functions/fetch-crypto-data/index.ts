@@ -8,18 +8,20 @@ const supabase = createClient(
 const FMP_KEY = Deno.env.get("FMP_KEY")!;
 
 Deno.serve(async () => {
-  async function fetchStocks() {
+  async function fetchCrypto() {
     try {
       const { data, error } = await supabase
         .from("prices")
         .select("symbol, name")
-        .eq("asset_type", "stocks");
+        .eq("asset_type", "crypto");
 
       if (error) {
-        console.error("Error fetching stock data from database: ", error);
+        console.error("Error fetching crypto data from database: ", error);
         return [];
       }
       const symbols = data.map((row) => row.symbol);
+
+      console.log(symbols);
 
       const symbolNameMap = new Map<string, string | null>();
       data.forEach(({ symbol, name }) => {
@@ -27,7 +29,7 @@ Deno.serve(async () => {
       });
 
       const res = await fetch(
-        `https://data.alpaca.markets/v2/stocks/snapshots?symbols=${symbols.join(
+        `https://data.alpaca.markets/v1beta3/crypto/us/snapshots?symbols=${symbols.join(
           ","
         )}`,
         {
@@ -40,10 +42,15 @@ Deno.serve(async () => {
 
       const json = await res.json();
 
+      console.log(json);
+
       async function fetchName(symbol: string): Promise<string | null> {
         try {
           const res = await fetch(
-            `https://financialmodelingprep.com/stable/search-symbol?query=${symbol}&apikey=${FMP_KEY}`
+            `https://financialmodelingprep.com/stable/quote?symbol=${symbol.replace(
+              "/",
+              ""
+            )}&apikey=${FMP_KEY}`
           );
 
           if (!res.ok) {
@@ -64,10 +71,10 @@ Deno.serve(async () => {
       const processedData = (
         await Promise.all(
           symbols.map(async (symbol) => {
-            const s = json[symbol];
+            const s = json.snapshots?.[symbol];
             if (!s?.latestTrade || !s?.prevDailyBar) return null;
 
-            const price = s.latestTrade.p.toFixed(2);
+            const price = s.latestTrade.p;
             const prevClose = s.prevDailyBar.c;
             const change = price - prevClose;
             const percentChange = ((change / prevClose) * 100).toFixed(2);
@@ -82,19 +89,21 @@ Deno.serve(async () => {
               change: change.toFixed(2),
               percent_change: percentChange,
               volume: (s.dailyBar?.v * s.dailyBar?.vw).toFixed(0) || 0,
-              asset_type: "stocks",
+              asset_type: "crypto",
               updated_at: new Date().toISOString(),
             };
           })
         )
       ).filter(Boolean);
 
+      console.log(processedData);
+
       const { data: upsertData, error: upsertError } = await supabase
         .from("prices")
         .upsert(processedData, { onConflict: ["symbol"] });
 
       if (upsertError) {
-        console.error("Error upserting stock data, ", upsertError);
+        console.error("Error upserting crypto data, ", upsertError);
         return new Response(
           JSON.stringify({ success: false, error: upsertError.message }),
           {
@@ -103,14 +112,14 @@ Deno.serve(async () => {
           }
         );
       } else {
-        console.log("Stock data upserted successfully.");
+        console.log("Crypto data upserted successfully.");
         return new Response(JSON.stringify({ success: true }), {
           status: 200,
           headers: { "Content-Type": "application/json" },
         });
       }
     } catch (err) {
-      console.error("Error fetching stocks:", err);
+      console.error("Error fetching crypto:", err);
       return new Response(
         JSON.stringify({ success: false, error: err.message }),
         { status: 500 }
@@ -118,5 +127,5 @@ Deno.serve(async () => {
     }
   }
 
-  return await fetchStocks();
+  return await fetchCrypto();
 });

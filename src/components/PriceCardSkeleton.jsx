@@ -6,7 +6,7 @@ function PriceCardSkeleton() {
 
   return (
     <div
-      className={`border border-border-muted skeleton min-h-98 bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition cursor-pointer duration-200 ${
+      className={`border border-border-muted skeleton h-[98px] bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition cursor-pointer duration-200 ${
         theme === "dark"
           ? "shadow-white shadow-xs hover:shadow-sm"
           : "shadow-sm"
