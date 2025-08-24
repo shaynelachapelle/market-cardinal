@@ -1,18 +1,23 @@
-import React from "react";
+import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import SignInButton from "./SignInButton";
+import SearchInput from "./SearchInput";
 
 function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="flex flex-row items-center justify-between bg-black min-w-screen h-20 px-6">
-      <a href="#" className="flex flex-row gap-2">
-        <h1 className="font-heading text-white text-3xl font-bold">
+    <div className="sticky top-0 z-100 flex flex-row items-center justify-between bg-black min-w-screen h-20 px-3 md:px-6">
+      <a href="#" className="">
+        <h1 className="font-heading text-white text-3xl font-bold leading-none">
           Market Cardinal
         </h1>
       </a>
 
       {/*<h2 className="text-white font-semibold">{formatDate(new Date())}</h2>*/}
 
-      <div className="flex flex-row items-center justify-center gap-10 text-white ">
+      <div className="hidden md:flex flex-row items-center justify-center gap-10 text-white ">
         <ThemeToggle />
         <a
           href="#"
@@ -32,31 +37,66 @@ function Header() {
         >
           Watchlists
         </a>
-        <div className="relative flex flex-row">
-          <input
-            className="border rounded-2xl bg-gray-200 p-1 px-2 text-black focus:outline-none focus:ring-0"
-            type="text"
-            placeholder="Search..."
-          ></input>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="gray-400"
-            className="absolute right-2 top-2 size-5"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-        <a
-          href="#"
-          className="border rounded-2xl text-black px-4 p-2 bg-gray-200 hover:opacity-90 duration-400"
+        <SearchInput />
+        <SignInButton />
+      </div>
+
+      <button
+        onClick={() => setIsOpen(true)}
+        className="md:hidden text-white focus:outline-none"
+      >
+        <Bars3Icon className="size-8" />
+      </button>
+
+      <div
+        className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsOpen(false)}
+      >
+        <div
+          className={`absolute top-0 left-0 w-64 h-full bg-bg shadow-lg p-6 flex flex-col gap-4 z-50 transform transition-transform duration-300 ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          Sign In
-        </a>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="self-end text-text"
+          >
+            <XMarkIcon className="size-8" />
+          </button>
+          <nav className="flex flex-col gap-4 text-text mt-2">
+            <SearchInput />
+            <hr className="py-1" />
+            <a
+              href="#"
+              onClick={() => setIsOpen(false)}
+              className="border-b border-transparent hover:border-white duration-200"
+            >
+              Overview
+            </a>
+            <a
+              href="#"
+              onClick={() => setIsOpen(false)}
+              className="border-b border-transparent hover:border-white duration-200"
+            >
+              News
+            </a>
+            <a
+              href="#"
+              onClick={() => setIsOpen(false)}
+              className="border-b border-transparent hover:border-white duration-200"
+            >
+              Watchlists
+            </a>
+            <ThemeToggle />
+            <hr className="py-1" />
+            <SignInButton />
+          </nav>
+        </div>
       </div>
     </div>
   );

@@ -21,8 +21,6 @@ Deno.serve(async () => {
       }
       const symbols = data.map((row) => row.symbol);
 
-      console.log(symbols);
-
       const symbolNameMap = new Map<string, string | null>();
       data.forEach(({ symbol, name }) => {
         symbolNameMap.set(symbol, name);
@@ -41,8 +39,6 @@ Deno.serve(async () => {
       );
 
       const json = await res.json();
-
-      console.log(json);
 
       async function fetchName(symbol: string): Promise<string | null> {
         try {
@@ -86,17 +82,15 @@ Deno.serve(async () => {
               symbol,
               name: companyName,
               price,
-              change: change.toFixed(2),
+              change: change,
               percent_change: percentChange,
-              volume: (s.dailyBar?.v * s.dailyBar?.vw).toFixed(0) || 0,
+              volume: s.dailyBar?.v * s.dailyBar?.vw || 0,
               asset_type: "crypto",
               updated_at: new Date().toISOString(),
             };
           })
         )
       ).filter(Boolean);
-
-      console.log(processedData);
 
       const { data: upsertData, error: upsertError } = await supabase
         .from("prices")

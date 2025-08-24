@@ -6,7 +6,7 @@ function NewsCardSkeleton() {
 
   return (
     <div
-      className={`flex flex-row max-w-full skeleton justify-between items-start gap-4 bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition duration-200 cursor-pointer ${
+      className={`flex flex-col md:flex-row max-w-full skeleton justify-between items-start gap-4 bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition duration-200 cursor-pointer ${
         theme === "dark"
           ? "shadow-white shadow-xs hover:shadow-sm"
           : "shadow-sm"
@@ -29,8 +29,8 @@ function NewsCardSkeleton() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-full max-w-1/2">
-        <div className="w-58 h-58 md:w-96 rounded-md bg-text-muted"></div>
+      <div className="flex flex-col items-center justify-center h-full min-w-full md:max-w-1/2">
+        <div className="w-full h-58 md:w-96 rounded-md bg-text-muted"></div>
       </div>
     </div>
   );

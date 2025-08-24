@@ -12,7 +12,7 @@ function NewsCard({ article }) {
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex flex-row justify-between items-start gap-4 bg-bg-light border border-border-muted shadow-sm rounded-md p-4 hover:shadow-md transition duration-200 cursor-pointer ${
+      className={`flex flex-col md:flex-row justify-between items-start gap-4 bg-bg-light border border-border-muted shadow-sm rounded-md p-4 hover:shadow-md transition duration-200 cursor-pointer ${
         theme === "dark"
           ? "shadow-white shadow-xs hover:shadow-sm"
           : "shadow-sm"
@@ -20,7 +20,7 @@ function NewsCard({ article }) {
     >
       <div className="flex flex-col justify-between h-58">
         <div className="flex flex-col gap-3">
-          <h3 className="font-semibold text-text text-lg max-w-xl">
+          <h3 className="font-semibold text-text text-lg max-w-xl line-clamp-3">
             {article.title}
           </h3>
           <p className="text-sm text-text-muted max-w-xl line-clamp-3 mt-1">
@@ -31,7 +31,7 @@ function NewsCard({ article }) {
           </p>
         </div>
 
-        <div className="flex flex-col justify-between max-w-xl gap-4">
+        <div className="pb-1 md:pb-0 flex flex-col justify-between max-w-xl gap-4">
           <p className="flex flex-row items-center gap-2 text-text-muted font-light text-xs">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -49,12 +49,12 @@ function NewsCard({ article }) {
           </p>
         </div>
       </div>
-      <div className="relative flex flex-col items-center justify-center h-full max-w-1/2">
+      <div className="relative flex flex-col items-center justify-center h-full max-w-full md:max-w-1/2">
         {!imageLoaded && (
-          <div className="absolute inset-0 max-w-58 h-58 md:max-w-96 lg:w-xl rounded-md bg-text-muted skeleton"></div>
+          <div className="absolute inset-0 h-58 md:max-w-96 lg:w-xl rounded-md bg-text-muted skeleton"></div>
         )}
         <img
-          className={`max-w-58 h-58 md:max-w-96 lg:w-xl object-cover rounded-md transition-opacity duration-500 ${
+          className={`h-58 md:max-w-96 lg:w-xl object-cover rounded-md transition-opacity duration-500 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           src={article.image}

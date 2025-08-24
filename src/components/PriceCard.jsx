@@ -33,18 +33,18 @@ function PriceCard({ asset }) {
       href="#"
       target="_blank"
       rel="noopener noreferrer"
-      className={`border border-border-muted bg-bg-light shadow-sm rounded-md p-4 hover:shadow-md transition cursor-pointer duration-200 ${
+      className={`border border-border-muted bg-bg-light shadow-sm rounded-md py-3 px-2 md:p-4 hover:shadow-md transition cursor-pointer duration-200 ${
         theme === "dark"
           ? "shadow-white shadow-xs hover:shadow-sm"
           : "shadow-sm"
       }`}
     >
-      <div className="flex flex-row justify-between gap-4 ">
-        <div className="flex flex-row justify-center  items-center gap-4">
+      <div className="flex flex-row justify-between gap-4">
+        <div className="flex flex-row justify-center items-center gap-2 md:gap-4">
           <div className="flex w-8 h-8 bg-none">
             <img className="rounded-xl" src={logo} />
           </div>
-          <div className="flex flex-col text-left gap-1">
+          <div className="flex flex-col text-left md:gap-1">
             <h3 className="flex flex-row items-center gap-2 text-text font-semibold">
               {asset.symbol}{" "}
               {asset.change > 0 ? (
@@ -75,7 +75,9 @@ function PriceCard({ asset }) {
                 </svg>
               )}
             </h3>
-            <p className="text-text-muted font-light text-sm">{asset.name}</p>
+            <p className="truncate max-w-24 md:max-w-none md:whitespace-normal text-text-muted font-light text-sm">
+              {asset.name}
+            </p>
           </div>
         </div>
 
@@ -86,10 +88,21 @@ function PriceCard({ asset }) {
               assetCategory === "Stocks" ? asset.price.toFixed(2) : asset.price
             )}
           </h3>
-          <p className={asset.change > 0 ? "text-green-500" : "text-red-500"}>
-            {asset.change.toFixed(2)} ({asset.percent_change.toFixed(2)}%)
+          <p
+            className={`text-sm ${
+              asset.change > 0 ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {asset.change > 0
+              ? `+${formatDollar(asset.change)}`
+              : formatDollar(asset.change)}{" "}
+            (
+            {asset.percent_change > 0
+              ? `+${asset.percent_change.toFixed(2)}`
+              : asset.percent_change.toFixed(2)}
+            %)
           </p>
-          <div className="text-text-muted text-xs">
+          <div className="hidden md:block pt-1 text-text-muted text-xs">
             <p>Vol: ${formatDollar(asset.volume)}</p>
           </div>
         </div>
@@ -99,7 +112,25 @@ function PriceCard({ asset }) {
 }
 
 function formatDollar(amount) {
-  return amount.toLocaleString("en-US", {
+  const num = Number(amount);
+
+  if (isNaN(num)) return amount;
+
+  if (Math.abs(num) >= 1000) {
+    return num.toLocaleString("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+  }
+
+  if (Math.abs(num) >= 1) {
+    return num.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
+  return num.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 8,
   });
