@@ -13,7 +13,9 @@ Deno.serve(async () => {
       const { data, error } = await supabase
         .from("prices")
         .select("symbol, name")
-        .eq("asset_type", "crypto");
+        .eq("asset_type", "crypto")
+        .order("volume", { ascending: false })
+        .limit(10);
 
       if (error) {
         console.error("Error fetching crypto data from database: ", error);

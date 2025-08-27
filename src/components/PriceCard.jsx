@@ -40,7 +40,7 @@ function PriceCard({ asset }) {
       }`}
     >
       <div className="flex flex-row justify-between gap-4">
-        <div className="flex flex-row justify-center items-center gap-2 md:gap-4">
+        <div className="flex flex-row justify-center items-center gap-3 md:gap-4">
           <div className="flex w-8 h-8 bg-none">
             <img className="rounded-xl" src={logo} />
           </div>
@@ -75,7 +75,7 @@ function PriceCard({ asset }) {
                 </svg>
               )}
             </h3>
-            <p className="truncate max-w-24 md:max-w-none md:whitespace-normal text-text-muted font-light text-sm">
+            <p className="truncate max-w-28 md:max-w-none md:whitespace-normal text-text-muted font-light text-sm">
               {asset.name}
             </p>
           </div>

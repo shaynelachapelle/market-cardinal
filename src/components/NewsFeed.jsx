@@ -36,6 +36,26 @@ function NewsFeed() {
     fetchArticles();
   }, [newsCategory]);
 
+  {
+    /*
+  useEffect(() => {
+    const channel = supabase.channel("articles-channel");
+    channel
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "articles" },
+        (payload) => {
+          const newArticle = payload.new;
+          setArticles((prev) => [...prev, newArticle]);
+        }
+      )
+      .subscribe((status) => {
+        console.log("Subscription: ", status);
+      });
+  }, []);
+  */
+  }
+
   if (loading)
     return (
       <div className="flex flex-col gap-4">

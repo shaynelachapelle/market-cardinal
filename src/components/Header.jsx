@@ -57,8 +57,8 @@ function Header() {
         onClick={() => setIsOpen(false)}
       >
         <div
-          className={`absolute top-0 left-0 w-64 h-full bg-bg shadow-lg p-6 flex flex-col gap-4 z-50 transform transition-transform duration-300 ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
+          className={`absolute top-0 right-0 w-64 h-full bg-bg shadow-lg p-6 flex flex-col gap-4 z-50 transform transition-transform duration-300 ${
+            isOpen ? "translate-x-0" : "translate-x-full"
           }`}
           onClick={(e) => e.stopPropagation()}
         >

@@ -10,6 +10,7 @@ function Footer() {
         <h2 className="font-heading text-white text-2xl font-bold">
           Market Cardinal
         </h2>
+        <h3 className="text-white">{formatDate(new Date())}</h3>
       </div>
       <div className="flex flex-row items-center text-text gap-20">
         <div className="flex flex-col text-sm gap-2 text-text-muted">
@@ -40,6 +41,54 @@ function Footer() {
       </div>
     </div>
   );
+}
+
+function formatDate(date) {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const dayName = days[date.getDay()];
+  const monthName = months[date.getMonth()];
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  // Get ordinal suffix for the day
+  const getOrdinal = (n) => {
+    if (n > 3 && n < 21) return "th"; // 11th - 20th
+    switch (n % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+
+  return `${dayName} ${monthName} ${day}${getOrdinal(day)}, ${year}`;
 }
 
 export default Footer;

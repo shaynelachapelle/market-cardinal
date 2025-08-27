@@ -13,13 +13,17 @@ Deno.serve(async () => {
       const { data, error } = await supabase
         .from("prices")
         .select("symbol, name")
-        .eq("asset_type", "stocks");
+        .eq("asset_type", "stocks")
+        .eq("status", true)
+        .limit(50);
 
       if (error) {
         console.error("Error fetching stock data from database: ", error);
         return [];
       }
       const symbols = data.map((row) => row.symbol);
+
+      console.log(symbols);
 
       const symbolNameMap = new Map<string, string | null>();
       data.forEach(({ symbol, name }) => {

@@ -29,7 +29,7 @@ function NewsCardSkeleton() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-full min-w-full md:max-w-1/2">
+      <div className="flex flex-col items-center justify-center h-full max-w-full md:max-w-1/2">
         <div className="w-full h-58 md:w-96 rounded-md bg-text-muted"></div>
       </div>
     </div>

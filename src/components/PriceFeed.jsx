@@ -18,9 +18,8 @@ function PriceFeed() {
         .select("*")
         .order("volume", { ascending: false })
         .eq("asset_type", assetCategory.toLowerCase())
+        .not("volume", "is", null)
         .limit(10);
-
-      console.log(data);
 
       if (error) {
         console.error("Error fetching assets: ", error);
