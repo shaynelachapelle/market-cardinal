@@ -3,6 +3,7 @@ import ThemeToggle from "./ThemeToggle";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import SignInButton from "./SignInButton";
 import SearchInput from "./SearchInput";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,24 +20,24 @@ function Header() {
 
       <div className="hidden md:flex flex-row items-center justify-center gap-10 text-white ">
         <ThemeToggle />
-        <a
-          href="#"
+        <Link
+          to="/"
           className="border-b border-transparent hover:border-white duration-200"
         >
           Overview
-        </a>
-        <a
-          href="#"
+        </Link>
+        <Link
+          to="/"
           className="border-b border-transparent hover:border-white duration-200"
         >
           News
-        </a>
-        <a
-          href="#"
+        </Link>
+        <Link
+          to="/watchlists"
           className="border-b border-transparent hover:border-white duration-200"
         >
           Watchlists
-        </a>
+        </Link>
         <SearchInput />
         <SignInButton />
       </div>

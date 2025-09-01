@@ -17,7 +17,7 @@ function Dropdown({ options, selected, onSelect }) {
   return (
     <div className="relative w-fit" ref={dropdownRef}>
       <button
-        className="w-24 flex justify-between items-center px-3 py-1 bg-bg-light text-sm text-text-muted border border-border-muted rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-bg-light"
+        className="w-24 flex justify-between items-center px-3 py-1 bg-bg-light text-sm text-text-muted border border-border-muted rounded-full shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-bg-light"
         onClick={() => setIsOpen(!isOpen)}
       >
         {selected}

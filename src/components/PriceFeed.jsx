@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PriceCard from "./PriceCard";
-import { supabase } from "../supabase-client.js";
+import { supabase } from "../app/supabase-client.js";
 import PriceCardSkeleton from "./PriceCardSkeleton.jsx";
 import { useAssetCategory } from "./AssetCategoryContext.jsx";
 

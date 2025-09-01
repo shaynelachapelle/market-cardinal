@@ -5,7 +5,7 @@ function Footer() {
   const year = today.getFullYear();
 
   return (
-    <div className="flex flex-col justify-between bg-black h-70 px-6 py-4 pb-12 gap-6">
+    <div className="flex flex-col justify-between bg-black h-80 px-6 py-4 pb-12 gap-6">
       <div>
         <h2 className="font-heading text-white text-2xl font-bold">
           Market Cardinal
@@ -13,7 +13,7 @@ function Footer() {
         <h3 className="text-white">{formatDate(new Date())}</h3>
       </div>
       <div className="flex flex-row items-center text-text gap-20">
-        <div className="flex flex-col text-sm gap-2 text-text-muted">
+        <div className="flex flex-col text-sm gap-2 text-zinc-500">
           <h3 className="text-base pb-1">Data Sources</h3>
           <a
             className="w-fit border-b border-transparent hover:border-border duration-200"
@@ -35,7 +35,7 @@ function Footer() {
           </a>
         </div>
       </div>
-      <div className="flex flex-col gap-4 text-text-muted text-xs">
+      <div className="flex flex-col gap-4 text-zinc-600 text-xs">
         <a href="https://logo.dev">Logos provided by Logo.dev</a>
         <p>©{year} Market Cardinal, Copyright All Rights Reserved.</p>
       </div>

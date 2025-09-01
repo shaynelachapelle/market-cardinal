@@ -10,14 +10,14 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
 );
 
-async function getOGImage(url: string): Promise<string | null> {
+async function getOGImage(url: string) {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { redirect: "follow" });
     const html = await res.text();
     const $ = cheerio.load(html);
     return $('meta[property="og:image"]').attr("content") || null;
   } catch (err) {
-    console.error(`Failed to fetch OG image for ${url}:`, err);
+    console.error(`Failed to fetch OG image for ${url}:`, err.message);
     return null;
   }
 }
@@ -56,13 +56,18 @@ const feeds = [
     category: "general",
   },
   {
-    source: "Yahoo Finance",
-    url: "https://rss.app/rss-feed?keyword=yahoo%20financ&region=US&lang=en",
+    source: "Investing.com",
+    url: "https://www.investing.com/rss/news.rss",
     category: "general",
   },
   {
-    source: "The Economist",
-    url: "https://rss.app/feeds/7OsomLor3921CNtX.xml",
+    source: "AlphaStreet",
+    url: "https://news.alphastreet.com/feed/",
+    category: "general",
+  },
+  {
+    source: "NASDAQ",
+    url: "https://www.nasdaq.com/feed/rssoutbound?category=Stocks",
     category: "general",
   },
   {
@@ -85,6 +90,11 @@ const feeds = [
     url: "https://blockchain.news/RSS/",
     category: "crypto",
   },
+  {
+    source: "CryptoPotato",
+    url: "https://cryptopotato.com/feed/",
+    category: "crypto",
+  }
 ];
 
 Deno.serve(async () => {
@@ -110,29 +120,47 @@ Deno.serve(async () => {
         const xml = await response.text();
         const parsed = parser.parse(xml);
 
-        const itemsToProcess = parsed.rss.channel.item.slice(0, maxArticles);
+        // Normalize items: RSS vs Atom
+        let items = parsed?.rss?.channel?.item || parsed?.feed?.entry;
+        if (!items) {
+          console.error(`No items found for ${feed.source}`, parsed);
+          continue;
+        }
+        if (!Array.isArray(items)) items = [items];
+
+        const itemsToProcess = items.slice(0, maxArticles);
 
         const feedItems = await Promise.all(
           itemsToProcess.map((i: any) =>
             limit(async () => {
+
+              let url = i.link;
+              if (typeof url === "object") {
+                url = url["@_href"] || url["#text"] || null;
+              }
+
               let image =
                 i["media:content"]?.["@_url"] ||
                 i["media:thumbnail"]?.["@_url"] ||
                 i.enclosure?.["@_url"] ||
                 null;
 
-              if (!image) {
-                console.log(`No RSS image for ${i.link}, fetching OG image...`);
-                image = await getOGImage(i.link);
+              if (!image && url) {
+                console.log(`No RSS image for ${url}, fetching OG image...`);
+                image = await getOGImage(url);
               }
 
               return {
-                title: he.decode(i.title),
-                url: i.link,
-                description: cleanDescription(i.description),
+                title: he.decode(i.title?.["@_text"] || i.title || ""),
+                url,
+                description: cleanDescription(i.summary || i.description || null),
                 image,
                 source: feed.source,
-                published_at: i.pubDate ? new Date(i.pubDate) : null,
+                published_at: i.pubDate
+                  ? new Date(i.pubDate)
+                  : i.updated
+                  ? new Date(i.updated)
+                  : null,
                 category: feed.category,
               };
             })

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "./ThemeContext";
 import { useAssetCategory } from "./AssetCategoryContext";
+import { Link } from "react-router-dom";
 
 function PriceCard({ asset }) {
   const { theme } = useTheme();
@@ -29,10 +30,8 @@ function PriceCard({ asset }) {
   }
 
   return (
-    <a
-      href="#"
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      to={`/assets/${asset.symbol}`}
       className={`border border-border-muted bg-bg-light shadow-sm rounded-md py-3 px-2 md:p-4 hover:shadow-md transition cursor-pointer duration-200 ${
         theme === "dark"
           ? "shadow-white shadow-xs hover:shadow-sm"
@@ -107,7 +106,7 @@ function PriceCard({ asset }) {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
