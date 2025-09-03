@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../../../stores/ThemeContext";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 
 export default function WatchlistCard() {

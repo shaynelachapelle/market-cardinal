@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../../../stores/ThemeContext";
 
 function NewsCardSkeleton() {
   const { theme, setTheme } = useTheme();

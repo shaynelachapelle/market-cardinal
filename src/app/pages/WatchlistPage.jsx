@@ -1,9 +1,9 @@
 import Dropdown from "../../components/Dropdown";
-import { useTheme } from "../../components/ThemeContext";
-import WatchlistCard from "../../components/WatchlistCard";
+import { useTheme } from "../../stores/ThemeContext";
+import WatchlistCard from "../../features/watchlist/components/WatchlistCard";
 import PlusButton from "../../components/PlusButton";
 
-export default function Watchlist() {
+export default function WatchlistPage() {
   const { theme } = useTheme();
 
   return (

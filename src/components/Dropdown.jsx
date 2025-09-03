@@ -45,7 +45,7 @@ function Dropdown({ options, selected, onSelect }) {
             : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <ul className="bg-bg-dark border border-border rounded-lg shadow-lg">
+        <ul className="bg-bg border border-border rounded-lg shadow-lg">
           {options.map((option, index) => (
             <li
               key={index}

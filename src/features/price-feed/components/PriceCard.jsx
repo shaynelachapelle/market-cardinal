@@ -1,6 +1,6 @@
 import React from "react";
-import { useTheme } from "./ThemeContext";
-import { useAssetCategory } from "./AssetCategoryContext";
+import { useTheme } from "../../../stores/ThemeContext";
+import { useAssetCategory } from "../stores/AssetCategoryContext";
 import { Link } from "react-router-dom";
 
 function PriceCard({ asset }) {

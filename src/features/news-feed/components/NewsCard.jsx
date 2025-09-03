@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../../../stores/ThemeContext";
 
 function NewsCard({ article }) {
   const [imageLoaded, setImageLoaded] = useState(false);

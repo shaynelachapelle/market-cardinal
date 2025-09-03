@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../app/supabase-client";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../stores/ThemeContext";
 import { Link } from "react-router-dom";
 
 export default function SearchInput() {

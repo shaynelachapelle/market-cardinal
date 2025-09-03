@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { supabase } from "../app/supabase-client.js";
-import NewsCard from "./NewsCard";
-import NewsCardSkeleton from "./NewsCardSkeleton.jsx";
-import { useNewsCategory } from "./NewsCategoryContext.jsx";
+import { supabase } from "../../../app/supabase-client.js";
+import NewsCard from "../components/NewsCard.jsx";
+import NewsCardSkeleton from "../../news-feed/components/NewsCardSkeleton.jsx";
+import { useNewsCategory } from "../stores/NewsCategoryContext.jsx";
 
 function NewsFeed() {
   const { newsCategory, setNewsCategory } = useNewsCategory();
