@@ -36,12 +36,7 @@ export default function SearchInput() {
 
     return parts.map((part, i) =>
       regex.test(part) ? (
-        <span
-          key={i}
-          className={`${
-            theme === "dark" ? "text-yellow-500" : "text-blue-600"
-          }`}
-        >
+        <span key={i} className="text-primary">
           {part}
         </span>
       ) : (

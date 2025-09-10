@@ -8,7 +8,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 z-100 flex flex-row items-center justify-between bg-black min-w-screen h-20 px-3 md:px-6">
+    <div className="sticky top-0 z-20 flex flex-row items-center justify-between bg-black min-w-screen h-20 px-3 md:px-6">
       <Logo />
       <DesktopNav />
       <button

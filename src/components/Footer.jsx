@@ -35,6 +35,7 @@ function Footer() {
           </a>
         </div>
       </div>
+      <hr className="w-full text-zinc-500" />
       <div className="flex flex-col gap-4 text-zinc-500 text-xs">
         <a href="https://logo.dev">Logos provided by Logo.dev</a>
         <p>©{year} Market Cardinal, Copyright All Rights Reserved.</p>

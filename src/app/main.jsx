@@ -13,6 +13,7 @@ import { UserProvider } from "../stores/UserContext.jsx";
 import ConfirmationPage from "./pages/ConfirmationPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
+import { WatchlistProvider } from "../features/watchlist/stores/WatchlistContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
       <UserProvider>
-        <RouterProvider router={router} />
+        <WatchlistProvider>
+          <RouterProvider router={router} />
+        </WatchlistProvider>
       </UserProvider>
     </ThemeProvider>
   </StrictMode>
