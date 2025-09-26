@@ -26,13 +26,17 @@ export default function ProfileMenu() {
         className="size-9 text-white cursor-pointer hover:opacity-90 duration-300"
       />
 
-      {isOpen && (
-        <div className="absolute flex flex-col gap-3 right-0 mt-2 min-w-fit bg-bg border border-border rounded-lg shadow-lg z-10 p-3">
-          <span className="text-text cursor-default">{user.email}</span>
-          <hr className="text-text-muted" />
-          <SignOutButton />
-        </div>
-      )}
+      <div
+        className={`absolute flex flex-col gap-3 right-0 mt-2 min-w-fit bg-bg border border-border rounded-lg shadow-lg z-10 p-3 transform transition-all duration-200 origin-top ${
+          isOpen
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95 pointer-events-none"
+        }`}
+      >
+        <span className="text-text cursor-default">{user.email}</span>
+        <hr className="text-text-muted" />
+        <SignOutButton />
+      </div>
     </div>
   );
 }

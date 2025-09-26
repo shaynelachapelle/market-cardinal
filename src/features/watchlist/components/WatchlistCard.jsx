@@ -79,35 +79,38 @@ export default function WatchlistCard({ watchlist, onSelect, isSelected }) {
             }}
           />
 
-          {/* Dropdown Menu */}
-          {isMenuOpen && (
-            <div className="absolute right-0 mt-2 w-28 bg-bg-light border border-border rounded-md shadow-lg z-20">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setIsMenuOpen(false);
-                  setIsModalOpen(true);
-                }}
-                className="flex flex-row justify-between items-center w-full text-left px-3 py-2 text-sm text-text-muted hover:text-text border-b border-border-muted duration-200 rounded-t-md cursor-pointer hover:bg-bg-light"
-              >
-                Edit
-                <PencilSquareIcon className="size-5" />
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setIsMenuOpen(false);
-                  onDelete(watchlist);
-                }}
-                className="flex flex-row justify-between items-center w-full text-left px-3 py-2 text-sm rounded-b-md cursor-pointer text-red-600 hover:text-red-500 duration-200 hover:bg-bg-light"
-              >
-                Delete
-                <TrashIcon className="size-5" />
-              </button>
-            </div>
-          )}
+          <div
+            className={`absolute right-0 mt-2 w-28 bg-bg-light border border-border rounded-md shadow-lg z-20 transform transition-all duration-200 origin-top ${
+              isMenuOpen
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-95 pointer-events-none"
+            }`}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setIsMenuOpen(false);
+                setIsModalOpen(true);
+              }}
+              className="flex flex-row justify-between items-center w-full text-left px-3 py-2 text-sm text-text-muted hover:text-text border-b border-border-muted duration-200 rounded-t-md cursor-pointer hover:bg-bg-light"
+            >
+              Edit
+              <PencilSquareIcon className="size-5" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setIsMenuOpen(false);
+                onDelete(watchlist);
+              }}
+              className="flex flex-row justify-between items-center w-full text-left px-3 py-2 text-sm rounded-b-md cursor-pointer text-red-600 hover:text-red-500 duration-200 hover:bg-bg-light"
+            >
+              Delete
+              <TrashIcon className="size-5" />
+            </button>
+          </div>
         </div>
       </div>
       {isModalOpen && (

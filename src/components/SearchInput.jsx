@@ -7,6 +7,8 @@ export default function SearchInput() {
   const { theme } = useTheme();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
   const wrapperRef = useRef(null);
 
   function fetchLogo(asset) {
@@ -46,16 +48,19 @@ export default function SearchInput() {
   }
 
   useEffect(() => {
-    const delayDebounce = setTimeout(async () => {
-      if (query.length > 0) {
+    if (query.length > 1) {
+      setShowDropdown(true);
+      setLoading(true);
+      const delayDebounce = setTimeout(async () => {
         const matches = await searchAssets(query);
         setResults(matches);
-      } else {
-        setResults([]);
-      }
-    }, 300);
-
-    return () => clearTimeout(delayDebounce);
+        setLoading(false);
+      }, 300);
+      return () => clearTimeout(delayDebounce);
+    } else {
+      setResults([]);
+      setShowDropdown(false);
+    }
   }, [query]);
 
   async function searchAssets(q) {
@@ -71,17 +76,30 @@ export default function SearchInput() {
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setResults([]);
+        setQuery("");
+        setShowDropdown(false);
+        setLoading(false);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (showDropdown) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showDropdown]);
 
   return (
     <div ref={wrapperRef} className="relative w-fit">
@@ -107,37 +125,81 @@ export default function SearchInput() {
         </svg>
       </div>
 
-      {results.length > 0 && (
-        <ul className="absolute mt-1 py-1 w-screen md:w-xl -right-7 md:right-0 rounded-xl bg-bg shadow-lg border border-border max-h-60 overflow-y-auto z-10">
-          {results.map((item, index) => (
-            <Link to={`/assets/${normalizeTicker(item.symbol)}`}>
-              <li
-                key={index}
-                className={`flex flex-row justify-between border-b border-border-muted hover:bg-bg-light text-text px-4 py-2 cursor-pointer gap-2 ${
-                  index === 0 ? "rounded-t-xl" : ""
-                } ${
-                  index === results.length - 1 ? "rounded-b-xl border-none" : ""
-                }`}
-              >
-                <span className="flex flex-row items-center font-semibold">
-                  <div className="flex rounded-xl w-6 h-6 bg-none mr-3">
-                    <img className="rounded-xl" src={fetchLogo(item)} />
-                  </div>
-                  <span className="w-20">
-                    {highlightMatch(item.symbol, query)}
-                  </span>
-                  <span className="truncate max-w-32 md:max-w-64 font-normal ml-4">
-                    {highlightMatch(item.name, query)}
-                  </span>
-                </span>
+      {showDropdown && (
+        <div className="absolute mt-1 py-1 w-screen md:w-xl -right-7 md:right-0 rounded-xl bg-bg shadow-lg border border-border max-h-60 overflow-y-auto z-10">
+          {results.length > 0 ? (
+            <ul>
+              {results.map((item, index) => (
+                <Link
+                  key={index}
+                  to={`/assets/${normalizeTicker(item.symbol)}`}
+                  state={{ item }}
+                  onClick={() => {
+                    setQuery("");
+                    setResults([]);
+                  }}
+                >
+                  <li
+                    className={`flex flex-row justify-between border-b border-border-muted hover:bg-bg-light text-text px-4 py-2 cursor-pointer gap-2 ${
+                      index === 0 ? "rounded-t-xl" : ""
+                    } ${
+                      index === results.length - 1
+                        ? "rounded-b-xl border-none"
+                        : ""
+                    }`}
+                  >
+                    <span className="flex flex-row items-center font-semibold">
+                      <div className="flex rounded-xl w-6 h-6 bg-none mr-3">
+                        <img className="rounded-xl" src={fetchLogo(item)} />
+                      </div>
+                      <span className="w-20">
+                        {highlightMatch(item.symbol, query)}
+                      </span>
+                      <span className="truncate max-w-32 md:max-w-64 font-normal ml-4">
+                        {highlightMatch(item.name, query)}
+                      </span>
+                    </span>
 
-                <span className="text-text-muted">
-                  {formatAssetType(item.asset_type)}
-                </span>
-              </li>
-            </Link>
-          ))}
-        </ul>
+                    <span className="text-text-muted">
+                      {formatAssetType(item.asset_type)}
+                    </span>
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          ) : loading ? (
+            <div className="flex items-center gap-2 px-4 py-2 text-text-muted">
+              <svg
+                className="animate-spin h-5 w-5 text-primary"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="8"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <circle
+                  className="opacity-75"
+                  cx="12"
+                  cy="12"
+                  r="8"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeDasharray="80"
+                  strokeDashoffset="60"
+                />
+              </svg>
+              Searching...
+            </div>
+          ) : (
+            <div className="px-4 py-2 text-text-muted">No results found.</div>
+          )}
+        </div>
       )}
     </div>
   );

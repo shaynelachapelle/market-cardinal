@@ -1,17 +1,17 @@
 export default function OAuthButtons({ onSignIn }) {
   return (
-    <div className="flex flex-row gap-6">
+    <div className="flex flex-row items-center justify-center w-1/2 gap-6">
       <button
         aria-label="Sign in with Google"
         onClick={() => onSignIn("google")}
-        className="flex items-center justify-center bg-bg-light w-12 h-12 rounded-xl cursor-pointer border border-border-muted p-2 hover:opacity-80 duration-200"
+        className="flex items-center gap-2 justify-center bg-bg-light w-full rounded-xl cursor-pointer border border-border-muted p-2 hover:opacity-80 duration-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
           y="0px"
           viewBox="0 0 48 48"
-          className=""
+          className="w-8 h-8"
         >
           <path
             fill="#fbc02d"
@@ -30,53 +30,9 @@ export default function OAuthButtons({ onSignIn }) {
             d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
           ></path>
         </svg>
-      </button>
-      <button
-        aria-label="Sign in with Facebook"
-        onClick={() => onSignIn("facebook")}
-        className="flex items-center justify-center bg-bg-light w-12 h-12 rounded-xl cursor-pointer border border-border-muted p-2 hover:opacity-80 duration-200"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          x="0px"
-          y="0px"
-          viewBox="0 0 48 48"
-        >
-          <linearGradient
-            id="Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1"
-            x1="9.993"
-            x2="40.615"
-            y1="9.993"
-            y2="40.615"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0" stop-color="#2aa4f4"></stop>
-            <stop offset="1" stop-color="#007ad9"></stop>
-          </linearGradient>
-          <path
-            fill="url(#Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1)"
-            d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z"
-          ></path>
-          <path
-            fill="#fff"
-            d="M26.707,29.301h5.176l0.813-5.258h-5.989v-2.874c0-2.184,0.714-4.121,2.757-4.121h3.283V12.46 c-0.577-0.078-1.797-0.248-4.102-0.248c-4.814,0-7.636,2.542-7.636,8.334v3.498H16.06v5.258h4.948v14.452 C21.988,43.9,22.981,44,24,44c0.921,0,1.82-0.084,2.707-0.204V29.301z"
-          ></path>
-        </svg>
-      </button>
-      <button
-        aria-label="Sign in with X"
-        onClick={() => onSignIn("twitter")}
-        className="flex text-text items-center justify-center bg-bg-light w-12 h-12 rounded-xl cursor-pointer border border-border-muted p-2 hover:opacity-80 duration-200"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          x="0px"
-          y="0px"
-          viewBox="0 0 48 48"
-          fill="currentColor"
-        >
-          <path d="M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z"></path>
-        </svg>
+        <span className="text-text font-light text-sm">
+          Sign in with Google
+        </span>
       </button>
     </div>
   );

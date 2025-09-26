@@ -30,7 +30,8 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
 
   return (
     <Link
-      to={`/assets/${asset.symbol}`}
+      to={`/assets/${normalizeTicker(asset.symbol)}`}
+      state={{ asset }}
       className={`border w-full border-border-muted bg-bg-light shadow-sm rounded-md py-3 px-2 md:p-4 hover:shadow-md transition cursor-pointer duration-200 ${
         theme === "dark"
           ? "shadow-white shadow-xs hover:shadow-sm"

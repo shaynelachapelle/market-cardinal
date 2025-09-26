@@ -6,6 +6,7 @@ import AuthError from "../../features/auth/components/AuthError";
 import AuthForm from "../../features/auth/components/AuthForm";
 import OAuthButtons from "../../features/auth/components/OAuthButtons";
 import AuthSwitchPrompt from "../../features/auth/components/AuthSwitchPrompt";
+import Logo from "../../components/Logo";
 
 export default function AuthPage() {
   const [isSignIn, setSignIn] = useState(true);
@@ -83,7 +84,10 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="relative flex flex-row w-screen h-screen items-center justify-center">
+    <div className="relative flex flex-col gap-6 w-screen h-screen items-center justify-center">
+      <h1 className="font-heading text-text text-3xl font-bold">
+        Market Cardinal
+      </h1>
       <div className="flex flex-col items-center w-full max-w-md bg-bg border border-border rounded-xl shadow-lg gap-5 p-4">
         <h2 className="font-heading text-text text-2xl">
           {isSignIn ? "Sign In" : "Sign Up"}
@@ -101,7 +105,11 @@ export default function AuthPage() {
           onSubmit={handleSubmit}
         />
 
-        <hr className="h-1 w-3/4 text-text-muted" />
+        <div className="flex flex-row justify-center items-center gap-3 w-3/4 text-text-muted">
+          <hr className="w-1/2" />
+          <p className="font-light">or</p>
+          <hr className="w-1/2" />
+        </div>
 
         <OAuthButtons onSignIn={handleOAuthSignIn} />
 

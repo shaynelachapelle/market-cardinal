@@ -36,8 +36,23 @@ const feeds = [
     category: "general",
   },
   {
-    source: "Federal Reserve Board",
-    url: "https://www.federalreserve.gov/feeds/press_all.xml",
+    source: "CNBC",
+    url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664",
+    category: "general",
+  },
+  {
+    source: "CNBC",
+    url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114",
+    category: "general",
+  },
+  {
+    source: "CNBC",
+    url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
+    category: "general",
+  },
+  {
+    source: "Los Angeles Times",
+    url: "https://www.latimes.com/business/technology/rss2.0.xml",
     category: "general",
   },
   {
@@ -46,18 +61,28 @@ const feeds = [
     category: "general",
   },
   {
-    source: "The Motley Fool",
-    url: "https://www.fool.ca/feed/",
+    source: "The New York Times",
+    url: "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml",
     category: "general",
   },
   {
-    source: "TMX Montreal",
-    url: "https://feeds.feedburner.com/MxCirculars",
+    source: "The Wall Street Journal",
+    url: "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
     category: "general",
   },
   {
-    source: "Investing.com",
-    url: "https://www.investing.com/rss/news.rss",
+    source: "The Wall Street Journal",
+    url: "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
+    category: "general",
+  },
+  {
+    source: "The Wall Street Journal",
+    url: "https://feeds.content.dowjones.io/public/rss/RSSWSJD",
+    category: "general",
+  },
+  {
+    source: "The Washington Post",
+    url: "https://feeds.washingtonpost.com/rss/business",
     category: "general",
   },
   {
@@ -66,13 +91,13 @@ const feeds = [
     category: "general",
   },
   {
-    source: "NASDAQ",
-    url: "https://www.nasdaq.com/feed/rssoutbound?category=Stocks",
+    source: "Toronto Star",
+    url: "https://www.thestar.com/search/?f=rss&t=article&c=business*&l=50&s=start_time&sd=desc",
     category: "general",
   },
   {
-    source: "The Wall Street Journal",
-    url: "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
+    source: "CBC",
+    url: "https://www.cbc.ca/webfeed/rss/rss-business",
     category: "general",
   },
   {
@@ -177,11 +202,16 @@ Deno.serve(async () => {
     const validItems = allItems.filter((item) =>
       Object.values(item).every((val) => val !== null && val !== "")
     );
+    
+    // Deduplicate by URL before insert
+    const dedupedItems = Array.from(
+      new Map(validItems.map((item) => [item.url, item])).values()
+    );
 
-    if (validItems.length > 0) {
+    if (dedupedItems.length > 0) {
       const { error } = await supabase
         .from("articles")
-        .upsert(validItems, { onConflict: "url" });
+        .upsert(dedupedItems, { onConflict: "url" });
 
       if (error) {
         console.error("DB error:", error);
