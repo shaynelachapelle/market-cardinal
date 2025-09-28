@@ -1,29 +1,31 @@
-
 # Market Cardinal 📈
 
-A modern financial news and market data platform that aggregates headlines from trusted sources and delivers real-time stock information. 
+A modern financial news and market data platform that aggregates headlines from trusted sources and delivers real-time stock information.
 
 Designed for both active investors and curious beginners, it offers a clean, user-friendly interface to stay informed on market trends, company updates, and key financial events.
 
 ## Tech Stack 💻
 
-- **Frontend:** React, TailwindCSS, HTML/CSS  
-- **Backend:** Supabase (PostgreSQL, Edge Functions, Authentication, Realtime), Node.js  
-- **Languages:** JavaScript  
+- **Frontend:** React, TailwindCSS, HTML/CSS
+- **Backend:** Supabase (PostgreSQL, Edge Functions, Authentication, Realtime), Node.js
+- **Languages:** JavaScript
 
 ## Screenshots 📷
 
-![Overview Screenshot](mc-overview-preview.JPG)
+![Overview Screenshot 1](mc-overview-preview.png)
 
-![Watchlist Screenshot](mc-watchlist-preview.JPG)
+![Overview Screenshot 2](mc-overview-search-preview.png)
 
-![Watchlist Create Screenshot](mc-watchlist-create-preview.JPG)
+![Watchlist Screenshot](mc-watchlists-preview.png)
 
-![Watchlist Search Screenshot](mc-watchlist-search-preview.JPG)
+![Watchlist Create Screenshot](mc-watchlist-create-preview.png)
 
-![Authentication Screenshot](mc-auth-preview.JPG)
+![Watchlist Add Screenshot](mc-watchlist-add-preview.png)
+
+![Asset Details Screenshot](mc-asset-details-preview.png)
+
+![Authentication Screenshot](mc-auth-preview.png)
 
 ## Authors ✏️
 
 - [@shaynelachapelle](https://github.com/shaynelachapelle)
-
