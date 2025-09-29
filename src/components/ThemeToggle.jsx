@@ -6,10 +6,9 @@ function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <a
-      href="#"
+    <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="hover:scale-110 transition-transform duration-300"
+      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
     >
       {theme === "dark" ? (
         <svg
@@ -34,7 +33,7 @@ function ThemeToggle() {
           />
         </svg>
       )}
-    </a>
+    </button>
   );
 }
 
