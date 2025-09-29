@@ -7,7 +7,7 @@ export default function PrivacyPolicyPage() {
       <div className="max-w-4xl mx-auto bg-bg shadow-md rounded-xl p-8 text-text cursor-default">
         <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
 
-        <p className="text-sm text-text-muted mb-6">Last Updated: 09/28/2025</p>
+        <p className="text-sm text-text-muted mb-6">Last Updated: 09/29/2025</p>
 
         <p className="mb-4">
           Your privacy is important to us. It is{" "}
@@ -121,6 +121,47 @@ export default function PrivacyPolicyPage() {
           with general information or research data we receive from other
           trusted sources.
         </p>
+
+        {/* --- Google OAuth Section --- */}
+        <h2 className="text-xl font-semibold mt-8 mb-4">
+          Use of Google Account Information
+        </h2>
+        <p className="mb-4">
+          Our application uses Google OAuth to access certain information from
+          your Google account. This may include your basic profile information
+          (such as name, email address, and profile picture) and any other data
+          specifically requested when you authorize access. We use this
+          information solely to:
+        </p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>
+            Create and manage your account within{" "}
+            <span className="font-semibold">Market Cardinal</span>
+          </li>
+          <li>Personalize your experience and display relevant content</li>
+          <li>Provide features that require Google account integration</li>
+        </ul>
+        <p className="mb-4">
+          We do <span className="font-semibold">not</span> sell, share, or
+          disclose your Google account information to third parties except as
+          required to provide our services or as mandated by law. All Google
+          account data is stored securely and handled in accordance with this
+          privacy policy.
+        </p>
+        <p className="mb-4">
+          You can revoke our access to your Google account at any time by
+          visiting your{" "}
+          <a
+            href="https://myaccount.google.com/permissions"
+            className="text-primary hover:opacity-80 duration-200"
+          >
+            Google Account permissions page
+          </a>
+          . Revoking access will prevent us from retrieving further information
+          from your Google account, though it will not affect data already
+          collected.
+        </p>
+        {/* --- End Google OAuth Section --- */}
 
         <h2 className="text-xl font-semibold mt-8 mb-4">
           Security of Your Personal Information

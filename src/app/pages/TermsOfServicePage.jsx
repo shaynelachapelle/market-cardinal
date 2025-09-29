@@ -6,7 +6,7 @@ export default function TermsOfServicePage() {
     <div className="relative min-h-screen bg-bg-dark py-10 px-6">
       <div className="max-w-4xl mx-auto bg-bg shadow-md rounded-xl p-8 cursor-default">
         <h1 className="text-3xl font-bold mb-6 text-text">Terms of Service</h1>
-        <p className="text-sm text-text-muted mb-6">Last Updated: 09/28/2025</p>
+        <p className="text-sm text-text-muted mb-6">Last Updated: 09/29/2025</p>
 
         <div className="space-y-8 text-text">
           <section>
@@ -132,7 +132,38 @@ export default function TermsOfServicePage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold mb-3">11. Contact Us</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              11. Use of Google Account Information
+            </h2>
+            <p>
+              By using Google OAuth to access{" "}
+              <span className="font-semibold">Market Cardinal</span>, you allow
+              us to retrieve certain information from your Google account, such
+              as your name, email address, and profile picture. We use this
+              information solely to provide and personalize our Services.
+            </p>
+            <p>
+              We do <span className="font-semibold">not</span> sell or share
+              your Google account information to third parties except as
+              required to provide our Services or as mandated by law. All Google
+              account data is stored securely and handled in accordance with
+              this Terms of Service and our Privacy Policy.
+            </p>
+            <p>
+              You may revoke our access at any time via your{" "}
+              <a
+                href="https://myaccount.google.com/permissions"
+                className="text-primary hover:opacity-80 duration-200"
+              >
+                Google Account permissions page
+              </a>
+              . Revoking access will prevent us from retrieving further
+              information from your Google account, though it will not affect
+              data already collected.
+            </p>
+          </section>
+          <section>
+            <h2 className="text-xl font-semibold mb-3">12. Contact Us</h2>
             <p>
               If you have any questions about these Terms, please contact us at:
             </p>
