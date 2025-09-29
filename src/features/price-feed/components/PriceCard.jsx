@@ -92,7 +92,7 @@ function PriceCard({ asset }) {
             %)
           </p>
           <div className="hidden md:block pt-1 text-text-muted text-xs">
-            <p>Vol: ${formatDollar(asset.volume)}</p>
+            <p>Vol: ${formatDollarAbbrev(asset.volume)}</p>
           </div>
         </div>
       </div>
@@ -123,6 +123,24 @@ function formatDollar(amount) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 8,
   });
+}
+
+function formatDollarAbbrev(value) {
+  if (value === null || value === undefined) return "-";
+
+  const absValue = Math.abs(Number(value));
+
+  if (absValue >= 1.0e12) {
+    return (value / 1.0e12).toFixed(2) + "T";
+  } else if (absValue >= 1.0e9) {
+    return (value / 1.0e9).toFixed(2) + "B";
+  } else if (absValue >= 1.0e6) {
+    return (value / 1.0e6).toFixed(2) + "M";
+  } else if (absValue >= 1.0e3) {
+    return (value / 1.0e3).toFixed(2) + "K";
+  } else {
+    return value.toString();
+  }
 }
 
 export default PriceCard;

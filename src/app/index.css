@@ -26,27 +26,37 @@ body {
 }
 
 :root {
-  --bg-dark: oklch(0.92 0 340);
-  --bg: oklch(0.96 0 340);
-  --bg-light: oklch(1 0 340);
-  --text: oklch(0.15 0 340);
-  --text-muted: oklch(0.4 0 340);
-  --highlight: oklch(1 0 340);
-  --border: oklch(0.6 0 340);
-  --border-muted: oklch(0.7 0 340);
-  --primary: oklch(0.55 0.15 250);
+  --bg-dark: oklch(0.975 0 340); /* light warm grey */
+  --bg: oklch(0.99 0 340); /* almost pure white */
+  --bg-light: oklch(1 0 340); /* pure white */
+  --text: oklch(0.12 0 340); /* dark grey for strong contrast */
+  --text-muted: oklch(0.42 0 340); /* lighter grey for subtitles */
+  --highlight: oklch(1 0 340); /* white highlight */
+  --border: oklch(0.9 0 340); /* softer light grey border */
+  --border-muted: oklch(0.94 0 340); /* extra subtle border */
+  --primary: oklch(0.6 0.17 250); /* keep accent color for emphasis */
+  --secondary: oklch(0.55 0.05 250); /* neutral bluish grey */
+  --success: oklch(0.65 0.18 145); /* finance green */
+  --danger: oklch(0.6 0.22 25); /* strong red */
+  --warning: oklch(0.78 0.19 85); /* amber/yellow */
+  --info: oklch(0.65 0.15 230); /* professional blue */
 }
 
 .dark {
-  --bg-dark: oklch(0.1 0 340);
-  --bg: oklch(0.15 0 340);
-  --bg-light: oklch(0.2 0 340);
-  --text: oklch(0.96 0 340);
-  --text-muted: oklch(0.76 0 340);
-  --highlight: oklch(0.5 0 340);
-  --border: oklch(0.4 0 340);
-  --border-muted: oklch(0.3 0 340);
-  --primary: oklch(0.65 0.18 250);
+  --bg-dark: oklch(0.12 0 340); /* very dark, almost black */
+  --bg: oklch(0.16 0 340); /* main background */
+  --bg-light: oklch(0.2 0 340); /* card background */
+  --text: oklch(0.96 0 340); /* bright text */
+  --text-muted: oklch(0.7 0 340); /* softer grey text */
+  --highlight: oklch(0.6 0 340); /* subtle highlight */
+  --border: oklch(0.35 0 340); /* softer border */
+  --border-muted: oklch(0.25 0 340); /* very subtle border */
+  --primary: oklch(0.72 0.18 250);
+  --secondary: oklch(0.65 0.07 250); /* muted bluish grey */
+  --success: oklch(0.72 0.2 145); /* brighter finance green */
+  --danger: oklch(0.68 0.25 25); /* strong red */
+  --warning: oklch(0.82 0.2 85); /* amber/yellow, vibrant but not neon */
+  --info: oklch(0.72 0.18 230); /* professional blue */
 }
 
 .skeleton {

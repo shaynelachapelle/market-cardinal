@@ -10,7 +10,7 @@ export default function DesktopNav() {
   const { user } = useUser();
 
   return (
-    <div className="hidden md:flex flex-row items-center justify-center gap-10 text-white">
+    <div className="hidden md:flex flex-row items-center justify-center gap-10 text-text">
       <ThemeToggle />
       <NavLinks />
       <SearchInput />

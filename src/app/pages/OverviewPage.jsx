@@ -25,14 +25,14 @@ export default function OverviewPage() {
 
       <div className="col-span-2 md:col-span-1 bg-bg shadow-md border border-border rounded-lg py-3 px-2 md:p-4">
         <div className="flex flex-row justify-between items-center mb-3 md:mb-4">
-          <h2 className="w-full text-text font-semibold pl-1 md:pl-0">
+          <h2 className="w-full text-text font-semibold pl-1 mb-2 md:pl-0">
             Prices
           </h2>
-          <Dropdown
+          {/*<Dropdown
             options={["Stocks", "Crypto"]}
             selected={assetCategory}
             onSelect={(value) => setAssetCategory(value)}
-          />
+          />*/}
         </div>
         <PriceFeed />
       </div>

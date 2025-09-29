@@ -5,7 +5,7 @@ export default function SignInButton() {
   return (
     <Link
       to="/auth"
-      className="border rounded-2xl w-fit text-black px-4 p-2 bg-gray-200 cursor-pointer hover:opacity-90 duration-400"
+      className="border border-primary rounded-2xl w-fit text-text px-4 p-2 bg-bg-light cursor-pointer hover:opacity-90 duration-400"
     >
       Sign In
     </Link>

@@ -5,20 +5,23 @@ import { NewsCategoryProvider } from "../features/news-feed/stores/NewsCategoryC
 import { AssetCategoryProvider } from "../features/price-feed/stores/AssetCategoryContext";
 import { PriceFeedProvider } from "../features/price-feed/stores/PriceFeedContext";
 import { NewsFeedProvider } from "../features/news-feed/stores/NewsFeedContext";
+import { MarketStatusProvider } from "../stores/MarketStatusContext";
 
 export function Provider({ children }) {
   return (
     <ThemeProvider>
       <UserProvider>
-        <WatchlistProvider>
-          <NewsCategoryProvider>
-            <AssetCategoryProvider>
-              <PriceFeedProvider>
-                <NewsFeedProvider>{children}</NewsFeedProvider>
-              </PriceFeedProvider>
-            </AssetCategoryProvider>
-          </NewsCategoryProvider>
-        </WatchlistProvider>
+        <MarketStatusProvider>
+          <WatchlistProvider>
+            <NewsCategoryProvider>
+              <AssetCategoryProvider>
+                <PriceFeedProvider>
+                  <NewsFeedProvider>{children}</NewsFeedProvider>
+                </PriceFeedProvider>
+              </AssetCategoryProvider>
+            </NewsCategoryProvider>
+          </WatchlistProvider>
+        </MarketStatusProvider>
       </UserProvider>
     </ThemeProvider>
   );

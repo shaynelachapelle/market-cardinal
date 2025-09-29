@@ -6,7 +6,6 @@ import AuthError from "../../features/auth/components/AuthError";
 import AuthForm from "../../features/auth/components/AuthForm";
 import OAuthButtons from "../../features/auth/components/OAuthButtons";
 import AuthSwitchPrompt from "../../features/auth/components/AuthSwitchPrompt";
-import Logo from "../../components/Logo";
 
 export default function AuthPage() {
   const [isSignIn, setSignIn] = useState(true);
@@ -53,7 +52,7 @@ export default function AuthPage() {
         email,
         password,
         options: {
-          emailRedirectTo: "http://localhost:5173/",
+          emailRedirectTo: "https://www.marketcardinal.com/",
         },
       });
       if (signUpError) {
@@ -72,7 +71,7 @@ export default function AuthPage() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: "http://localhost:5173/",
+        redirectTo: "https://www.marketcardinal.com/",
       },
     });
 

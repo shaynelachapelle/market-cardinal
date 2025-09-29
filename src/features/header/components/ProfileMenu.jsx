@@ -23,7 +23,7 @@ export default function ProfileMenu() {
     <div className="relative" ref={menuRef}>
       <UserCircleIcon
         onClick={() => setIsOpen((prev) => !prev)}
-        className="size-9 text-white cursor-pointer hover:opacity-90 duration-300"
+        className="size-9 text-text cursor-pointer hover:opacity-90 duration-300"
       />
 
       <div
