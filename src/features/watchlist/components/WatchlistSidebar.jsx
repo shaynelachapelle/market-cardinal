@@ -49,7 +49,7 @@ export default function WatchlistSidebar({
           <p className="text-text-muted">
             <Link
               to="/auth"
-              className="font-semibold hover:text-text duration-200"
+              className="font-semibold text-primary hover:opacity-80 duration-200"
             >
               Sign in
             </Link>{" "}

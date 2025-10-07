@@ -54,7 +54,7 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
                 <MinusIcon className="text-text-muted size-3" />
               )}
             </h3>
-            <p className="truncate max-w-28 md:max-w-none md:whitespace-normal text-text-muted font-light text-sm">
+            <p className="truncate max-w-28 md:max-w-48 text-text-muted font-light text-sm">
               {asset.name}
             </p>
           </div>

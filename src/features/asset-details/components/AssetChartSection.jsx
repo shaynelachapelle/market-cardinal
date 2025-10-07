@@ -108,8 +108,8 @@ export default function AssetChartSection() {
       return { high: null, low: null, changePercent: null };
 
     const values = filteredData.map((d) => d.value);
-    const high = Math.max(...values);
-    const low = Math.min(...values);
+    const high = Math.max(...values).toFixed(2);
+    const low = Math.min(...values).toFixed(2);
 
     const first = filteredData[0].value;
     const last = filteredData[filteredData.length - 1].value;

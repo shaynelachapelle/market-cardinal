@@ -15,7 +15,7 @@ export default function SearchInput() {
     if (asset.asset_type === "stocks" || asset.asset_type === "ETFs") {
       return `https://img.logo.dev/ticker/${asset.symbol}?token=${
         import.meta.env.VITE_LOGODEV_KEY
-      }&size=128&retina=true&format=png&theme=${
+      }&size=128&fallback=monogram&retina=true&format=png&theme=${
         theme === "dark" ? "dark" : "light"
       }`;
     } else if (asset.asset_type === "crypto") {
@@ -23,7 +23,7 @@ export default function SearchInput() {
         asset.symbol
       )}?token=${
         import.meta.env.VITE_LOGODEV_KEY
-      }&size=128&retina=true&format=png&theme=${
+      }&size=128&fallback=monogram&retina=true&format=png&theme=${
         theme === "dark" ? "dark" : "light"
       }`;
     }

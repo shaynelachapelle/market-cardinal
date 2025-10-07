@@ -1,17 +1,17 @@
 export default function OAuthButtons({ onSignIn }) {
   return (
-    <div className="flex flex-row items-center justify-center w-1/2 gap-6">
+    <div className="flex flex-row items-center justify-center w-3/4 gap-6">
       <button
         aria-label="Sign in with Google"
         onClick={() => onSignIn("google")}
-        className="flex items-center gap-2 justify-center bg-bg-light w-full rounded-xl cursor-pointer border border-border-muted p-2 hover:opacity-80 duration-200"
+        className="flex items-center gap-2 justify-center bg-bg-light w-full rounded-xl cursor-pointer border border-border-muted hover:border-border p-2 hover:opacity-80 duration-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
           y="0px"
           viewBox="0 0 48 48"
-          className="w-8 h-8"
+          className="w-6 h-6"
         >
           <path
             fill="#fbc02d"
@@ -30,7 +30,7 @@ export default function OAuthButtons({ onSignIn }) {
             d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
           ></path>
         </svg>
-        <span className="text-text font-light text-sm">
+        <span className="text-text font-medium text-sm">
           Sign in with Google
         </span>
       </button>

@@ -86,7 +86,6 @@ Deno.serve(async () => {
               change: change.toFixed(2),
               percent_change: percentChange,
               volume: (s.dailyBar?.v * s.dailyBar?.vw).toFixed(0) || 0,
-              asset_type: "stocks",
               updated_at: new Date().toISOString(),
             };
           })

@@ -1,16 +1,23 @@
-// components/Header/NavLinks.jsx
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function NavLinks({ onClick }) {
+  const location = useLocation();
+  console.log(location);
+
   return (
     <>
-      <Link
+      <NavLink
         to="/"
         onClick={onClick}
-        className="border-b border-transparent hover:border-text-muted duration-200"
+        className={({ isActive }) =>
+          `border-b hover:border-text-muted duration-200 ${
+            isActive ? "border-text-muted" : "border-transparent"
+          }`
+        }
       >
         Overview
-      </Link>
+      </NavLink>
       {/*
         <Link
           to="/"
@@ -20,13 +27,17 @@ export default function NavLinks({ onClick }) {
           News
         </Link>
         */}
-      <Link
+      <NavLink
         to="/watchlists"
         onClick={onClick}
-        className="border-b border-transparent hover:border-text-muted duration-200"
+        className={({ isActive }) =>
+          `border-b hover:border-text-muted duration-200 ${
+            isActive ? "border-text-muted" : "border-transparent"
+          }`
+        }
       >
         Watchlists
-      </Link>
+      </NavLink>
     </>
   );
 }

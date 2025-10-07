@@ -9,6 +9,35 @@ export const DEFAULT_TICKERS = [
   { symbol: "AVGO", name: "Broadcom Inc.", asset_type: "stocks" },
   { symbol: "INTC", name: "Intel Corp.", asset_type: "stocks" },
   { symbol: "NFLX", name: "Netflix Inc.", asset_type: "stocks" },
+  { symbol: "ORCL", name: "Oracle Corporation", asset_type: "stocks" },
+  { symbol: "V", name: "Visa Inc.", asset_type: "stocks" },
+  { symbol: "PLTR", name: "Palantir Techologies Inc.", asset_type: "stocks" },
+  {
+    symbol: "COST",
+    name: "Costco Wholesale Corporation",
+    asset_type: "stocks",
+  },
+  { symbol: "XOM", name: "Exxon Mobil Corporation", asset_type: "stocks" },
+  { symbol: "PG", name: "Procter & Gamble Company", asset_type: "stocks" },
+  { symbol: "BAC", name: "Bank of America Corporation", asset_type: "stocks" },
+  {
+    symbol: "IBM",
+    name: "International Business Machines Corporation",
+    asset_type: "stocks",
+  },
+  { symbol: "AMD", name: "Advanced Micro Devices, Inc.", asset_type: "stocks" },
+  { symbol: "MS", name: "Morgan Stanley", asset_type: "stocks" },
+  { symbol: "UBER", name: "Uber Technologies, Inc.", asset_type: "stocks" },
+  { symbol: "MS", name: "Morgan Stanley", asset_type: "stocks" },
+  { symbol: "JPM", name: "JP Morgan Chase & Co.", asset_type: "stocks" },
+  { symbol: "WMT", name: "Walmart Inc.", asset_type: "stocks" },
+  {
+    symbol: "TSM",
+    name: "Taiwan Semiconductor Manufacturing Co., Ltd.",
+    asset_type: "stocks",
+  },
+
+  /*
   { symbol: "BTC/USD", name: "Bitcoin USD", asset_type: "crypto" },
   { symbol: "ETH/USD", name: "Ethereum USD", asset_type: "crypto" },
   { symbol: "XRP/USD", name: "XRP USD", asset_type: "crypto" },
@@ -19,4 +48,5 @@ export const DEFAULT_TICKERS = [
   { symbol: "SHIB/USD", name: "Shiba Inu USD", asset_type: "crypto" },
   { symbol: "PEPE/USD", name: "Pepe USD", asset_type: "crypto" },
   { symbol: "AVAX/USD", name: "Avalanche USD", asset_type: "crypto" },
+   */
 ];
