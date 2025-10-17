@@ -11,6 +11,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage.jsx";
 import TermsOfServicePage from "./pages/TermsOfServicePage.jsx";
 import GlobalLayout from "../components/GlobalLayout.jsx";
+import { AssetContextWrapper } from "../features/asset-details/stores/AssetContextWrapper.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,14 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Overview /> },
           { path: "watchlists", element: <Watchlist /> },
-          { path: "assets/:symbol", element: <AssetDetailsPage /> },
+          {
+            path: "assets/:symbol",
+            element: (
+              <AssetContextWrapper>
+                <AssetDetailsPage />
+              </AssetContextWrapper>
+            ),
+          },
         ],
       },
       { path: "/auth", element: <AuthPage /> },

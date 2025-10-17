@@ -1,14 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
 import AssetChart from "./AssetChart";
 import { MinusIcon, XCircleIcon } from "@heroicons/react/16/solid";
-import { useAssetContext } from "../stores/AssetContext";
 import Spinner from "../../../components/Spinner";
+import { useAssetContext } from "../stores/AssetContext";
 
 export default function AssetChartSection() {
   const [data, setData] = useState([]);
   const [range, setRange] = useState("5 years");
   const [loading, setLoading] = useState(true);
-  const { asset } = useAssetContext();
+  const { symbol } = useAssetContext();
 
   useEffect(() => {
     setData([]);
@@ -17,9 +17,9 @@ export default function AssetChartSection() {
     async function fetchChartData() {
       try {
         const response = await fetch(
-          `https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=${
-            asset?.symbol
-          }&apikey=${import.meta.env.VITE_FMP_KEY}`
+          `https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=${symbol}&apikey=${
+            import.meta.env.VITE_FMP_KEY
+          }`
         );
         const json = await response.json();
 
@@ -40,10 +40,10 @@ export default function AssetChartSection() {
       }
     }
 
-    if (asset?.symbol) {
+    if (symbol) {
       fetchChartData();
     }
-  }, [asset]);
+  }, [symbol]);
 
   const ranges = [
     //"1 day",
@@ -185,7 +185,10 @@ export default function AssetChartSection() {
           {!loading && filteredData.length === 0 && (
             <p className="absolute flex flex-row items-center gap-2 opacity-60 text-text-muted top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10">
               <XCircleIcon className="size-4" />{" "}
-              <span>Data could not be retrieved. Please try again later.</span>
+              <span>
+                {symbol} chart data is not currently available. Stay tuned for
+                new data.
+              </span>
             </p>
           )}
         </div>

@@ -7,21 +7,31 @@ import { useAssetContext } from "../stores/AssetContext";
 export default function AssetAbout() {
   const { details } = useAssetContext();
 
-  const info = [
-    { label: "Sector", value: details?.sector },
-    { label: "Industry", value: details?.industry },
-    { label: "CEO", value: details?.ceo },
-    { label: "Website", value: details?.website, link: true },
-    { label: "Headquarters", value: details?.city },
-    { label: "Country", value: details?.country },
-    { label: "IPO Date", value: details?.ipo_date || details?.ipoDate },
-    {
-      label: "Employees",
-      value: formatDollarAbbrev(
-        details?.employees || details?.fullTimeEmployees
-      ),
-    },
-  ];
+  const info =
+    details?.asset_type === "ETFs"
+      ? [
+          { label: "Sector", value: details?.sector },
+          { label: "Industry", value: details?.industry },
+          { label: "Website", value: details?.website, link: true },
+          { label: "Headquarters", value: details?.city },
+          { label: "Country", value: details?.country },
+          { label: "IPO Date", value: details?.ipo_date || details?.ipoDate },
+        ]
+      : [
+          { label: "Sector", value: details?.sector },
+          { label: "Industry", value: details?.industry },
+          { label: "CEO", value: details?.ceo },
+          { label: "Website", value: details?.website, link: true },
+          { label: "Headquarters", value: details?.city },
+          { label: "Country", value: details?.country },
+          { label: "IPO Date", value: details?.ipo_date || details?.ipoDate },
+          {
+            label: "Employees",
+            value: formatDollarAbbrev(
+              details?.employees || details?.fullTimeEmployees
+            ),
+          },
+        ];
 
   return (
     <div className="flex flex-col gap-4 bg-bg px-8 py-4 mx-4 border border-border rounded-lg cursor-default">
@@ -37,9 +47,9 @@ export default function AssetAbout() {
                 href={value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-row gap-2 justify-center items-center text-xl hover:opacity-80 duration-200"
+                className="flex flex-row gap-2 justify-center items-center text-xl text-primary hover:opacity-80 duration-200"
               >
-                {value}
+                <span className="truncate max-w-100">{value}</span>
                 <ArrowTopRightOnSquareIcon className="size-4" />
               </a>
             ) : (

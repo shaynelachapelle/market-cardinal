@@ -60,7 +60,7 @@ function PriceCard({ asset }) {
                 <MinusIcon className="text-text-muted size-3" />
               )}
             </h3>
-            <p className="truncate max-w-28 md:max-w-none  text-text-muted font-light text-sm">
+            <p className="truncate max-w-28 md:max-w-48 2xl:max-w-72 text-text-muted font-light text-sm">
               {asset.name}
             </p>
           </div>

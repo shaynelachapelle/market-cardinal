@@ -1,4 +1,3 @@
-import React from "react";
 import { MinusIcon } from "@heroicons/react/16/solid";
 import { useAssetContext } from "../stores/AssetContext";
 
@@ -29,7 +28,7 @@ export default function AssetStats() {
         <div className="flex flex-col gap-2 text-text">
           <p className="font-semibold">Beta</p>
           {details?.beta ? (
-            <p className="text-xl">{details?.beta}</p>
+            <p className="text-xl">{details?.beta.toFixed(2)}</p>
           ) : (
             <MinusIcon className="size-6 text-text-muted" />
           )}

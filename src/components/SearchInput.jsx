@@ -105,7 +105,7 @@ export default function SearchInput() {
     <div ref={wrapperRef} className="relative w-fit">
       <div className="relative flex flex-row">
         <input
-          className="border border-border-muted rounded-2xl bg-bg-light p-1 px-2 text-text focus:outline-none hover:border-border hover:placeholder-text focus:ring-0 transition-colors duration-400"
+          className="border border-border-muted rounded-2xl bg-bg-light p-1 px-2 text-text focus:outline-none hover:border-border focus:border-border focus:ring-0 transition-colors duration-400"
           type="text"
           placeholder="Search symbols..."
           value={query}

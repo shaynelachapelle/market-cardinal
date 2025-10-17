@@ -1,30 +1,94 @@
-import React from "react";
-import { formatDollar } from "../../../app/pages/AssetDetailsPage";
 import { MinusIcon, TrashIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { useTheme } from "../../../stores/ThemeContext";
 import { useAssetContext } from "../stores/AssetContext";
+import { useState, useEffect, useRef } from "react";
+import { supabase } from "../../../app/supabase-client";
+import findLogo from "../../../utils/findLogo";
+import formatDollar from "../../../utils/formatDollar";
 
 export default function AssetHeader() {
-  const { theme } = useTheme();
-  const { asset, symbol, loading, details } = useAssetContext();
+  const { symbol, details, location } = useAssetContext();
+  const [asset, setAsset] = useState(location?.state?.asset ?? null);
+  const [loading, setLoading] = useState(false);
+  const [shouldPoll, setShouldPoll] = useState(false);
+  const updateIntervalRef = useRef(null);
 
-  const normalizeTicker = (ticker) =>
-    ticker?.endsWith("/USD") ? ticker.replace("/USD", "USD") : ticker;
+  useEffect(() => {
+    if (location?.state?.asset) {
+      setAsset(location?.state?.asset);
+    }
 
-  const logo =
-    asset?.asset_type === "stocks" || asset?.asset_type === "ETFs"
-      ? `https://img.logo.dev/ticker/${asset?.symbol}?token=${
-          import.meta.env.VITE_LOGODEV_KEY
-        }&size=128&retina=true&format=png&theme=${
-          theme === "dark" ? "dark" : "light"
-        }`
-      : asset?.asset_type === "crypto"
-      ? `https://img.logo.dev/crypto/${normalizeTicker(asset?.symbol)}?token=${
-          import.meta.env.VITE_LOGODEV_KEY
-        }&size=128&retina=true&format=png&theme=${
-          theme === "dark" ? "dark" : "light"
-        }`
-      : null;
+    async function fetchAsset() {
+      try {
+        const { data, error } = await supabase
+          .from("prices")
+          .select("*")
+          .eq("symbol", symbol)
+          .single();
+
+        if (error) {
+          console.error(error);
+          return;
+        }
+
+        if (data?.status) {
+          setAsset(data);
+          setShouldPoll(false);
+        } else {
+          setShouldPoll(true);
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (symbol && !location?.state?.asset) {
+      setLoading(true);
+      fetchAsset();
+    }
+  }, [symbol, location?.state?.asset]);
+
+  useEffect(() => {
+    if (!shouldPoll || !symbol) return;
+
+    fetchStockData(symbol);
+    updateIntervalRef.current = setInterval(fetchStockData, 1000, symbol);
+
+    return () => {
+      if (updateIntervalRef.current) {
+        clearInterval(updateIntervalRef.current);
+        updateIntervalRef.current = null;
+      }
+    };
+  }, [shouldPoll, symbol]);
+
+  useEffect(() => {
+    const currentSymbol = symbol;
+    if (!currentSymbol) return;
+
+    const channel = supabase
+      .channel(`asset-price-realtime-${currentSymbol}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "prices",
+          filter: `symbol=eq.${currentSymbol}`,
+        },
+        (payload) => {
+          if (payload.eventType === "UPDATE") {
+            setAsset(payload.new);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => supabase.removeChannel(channel);
+  }, [symbol]);
+
+  const logo = findLogo(asset);
 
   return (
     <div className="flex flex-row gap-10 bg-bg p-8 mx-4 border border-border rounded-lg cursor-default">
@@ -100,4 +164,46 @@ export default function AssetHeader() {
       </div>
     </div>
   );
+}
+
+async function fetchStockData(symbol) {
+  try {
+    const res = await fetch(
+      `https://data.alpaca.markets/v2/stocks/snapshots?symbols=${symbol}`,
+      {
+        headers: {
+          "APCA-API-KEY-ID": import.meta.env.VITE_ALPACA_KEY,
+          "APCA-API-SECRET-KEY": import.meta.env.VITE_ALPACA_SECRET,
+        },
+      }
+    );
+    const json = await res.json();
+    const s = json[symbol];
+
+    console.log(s);
+
+    if (!s || !s.latestTrade) return;
+
+    const price = s.latestTrade.p.toFixed(2);
+    const prevClose = s.prevDailyBar.c;
+    const change = price - prevClose;
+    const percentChange = ((change / prevClose) * 100).toFixed(2);
+    const volume = (s.dailyBar?.v * s.dailyBar?.vw).toFixed(0) || 0;
+
+    const { error } = await supabase
+      .from("prices")
+      .update({
+        price,
+        previous_close: prevClose,
+        change,
+        percent_change: percentChange,
+        volume,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("symbol", symbol);
+
+    if (error) console.log(error);
+  } catch (e) {
+    console.error(e);
+  }
 }

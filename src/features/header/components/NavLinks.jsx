@@ -1,10 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 export default function NavLinks({ onClick }) {
-  const location = useLocation();
-  console.log(location);
-
   return (
     <>
       <NavLink

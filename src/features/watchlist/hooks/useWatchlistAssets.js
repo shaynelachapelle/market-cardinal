@@ -29,7 +29,8 @@ export default function useWatchlistAssets(userId, watchlistId) {
               price,
               percent_change,
               volume,
-              change
+              change,
+              status
             )
           `
           )
@@ -72,8 +73,6 @@ export default function useWatchlistAssets(userId, watchlistId) {
           filter: `profile_id=eq.${userId}`,
         },
         async (payload) => {
-          console.log("Realtime payload:", payload);
-
           if (payload.eventType === "INSERT" && payload.new) {
             const { data: priceData } = await supabase
               .from("prices")
@@ -160,6 +159,74 @@ export default function useWatchlistAssets(userId, watchlistId) {
       supabase.removeChannel(priceChannel);
     };
   }, [userId]);
+
+  //implement useEffect that updates all watchlist items in user watchlists that are not active
+  useEffect(() => {
+    if (!userId || !watchlistAssets) return;
+
+    const interval = setInterval(async () => {
+      try {
+        const inactiveAssets = Object.values(watchlistAssets)
+          .flat()
+          .filter((asset) => asset.prices?.status === false);
+
+        if (inactiveAssets.length === 0) return;
+
+        const symbols = [...new Set(inactiveAssets.map((a) => a.asset_symbol))];
+
+        const res = await fetch(
+          `https://data.alpaca.markets/v2/stocks/snapshots?symbols=${symbols.join(
+            ","
+          )}`,
+          {
+            headers: {
+              "APCA-API-KEY-ID": import.meta.env.VITE_ALPACA_KEY,
+              "APCA-API-SECRET-KEY": import.meta.env.VITE_ALPACA_SECRET,
+            },
+          }
+        );
+        const json = await res.json();
+
+        const processedData = (
+          await Promise.all(
+            symbols.map(async (symbol) => {
+              const s = json[symbol];
+              if (!s?.latestTrade || !s?.prevDailyBar) return null;
+
+              const price = s.latestTrade.p.toFixed(2);
+              const prevClose = s.prevDailyBar.c;
+              const change = price - prevClose;
+              const percentChange = ((change / prevClose) * 100).toFixed(2);
+
+              return {
+                symbol,
+                price,
+                change: change.toFixed(2),
+                percent_change: percentChange,
+                volume: (s.dailyBar?.v * s.dailyBar?.vw).toFixed(0) || 0,
+                updated_at: new Date().toISOString(),
+              };
+            })
+          )
+        ).filter(Boolean);
+
+        console.log(processedData);
+
+        const { data: upsertData, error: upsertError } = await supabase
+          .from("prices")
+          .upsert(processedData, { onConflict: ["symbol"] });
+
+        if (upsertError) {
+          console.log("Error upserting inactive prices:", upsertError);
+        }
+      } catch (err) {
+        console.error("Failed to update prices:", err);
+        setError(err);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [userId, watchlistAssets]);
 
   return {
     assets: watchlistId ? watchlistAssets[watchlistId] || [] : [],

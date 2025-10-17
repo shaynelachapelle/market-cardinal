@@ -1,5 +1,5 @@
 {
-  "name": "fin-dashboard",
+  "name": "market-cardinal",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,8 +13,10 @@
     "@heroicons/react": "^2.2.0",
     "@supabase/supabase-js": "^2.53.0",
     "@tailwindcss/vite": "^4.1.11",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "lightweight-charts": "^5.0.8",
+    "luxon": "^3.7.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.8.2",

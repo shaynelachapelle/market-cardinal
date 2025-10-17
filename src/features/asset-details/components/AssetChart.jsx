@@ -4,6 +4,7 @@ import { useTheme } from "../../../stores/ThemeContext";
 
 const AssetChart = ({ data, range }) => {
   const chartContainerRef = useRef();
+  const chartRef = useRef();
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -46,6 +47,20 @@ const AssetChart = ({ data, range }) => {
       chart.remove();
     };
   }, [data]);
+
+  useEffect(() => {
+    if (!chartRef.current) return;
+    chartRef.current.applyOptions({
+      layout: {
+        background: { color: theme === "dark" ? "#000000" : "#ffffff" },
+        textColor: theme === "dark" ? "#f5f5f5" : "#333",
+      },
+      grid: {
+        vertLines: { color: theme === "dark" ? "#2b2b2b" : "#eeeeee" },
+        horzLines: { color: theme === "dark" ? "#2b2b2b" : "#eeeeee" },
+      },
+    });
+  }, [theme]);
 
   return (
     <div

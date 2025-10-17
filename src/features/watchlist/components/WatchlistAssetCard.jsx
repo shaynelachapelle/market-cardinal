@@ -39,7 +39,7 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
       }`}
     >
       <div className="flex flex-row items-center justify-between gap-4">
-        <div className="flex flex-row justify-start items-center w-62 gap-3 md:gap-4">
+        <div className="flex flex-row justify-start items-center w-70 gap-3 md:gap-4">
           <div className="flex w-8 h-8 bg-none">
             <img className="rounded-xl" src={logo} />
           </div>
@@ -54,7 +54,7 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
                 <MinusIcon className="text-text-muted size-3" />
               )}
             </h3>
-            <p className="truncate max-w-28 md:max-w-48 text-text-muted font-light text-sm">
+            <p className="truncate max-w-28 md:max-w-56 text-text-muted font-light text-sm">
               {asset.name}
             </p>
           </div>
@@ -103,8 +103,8 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
         )}
 
         {asset.volume != null ? (
-          <div className="hidden md:block pt-1 w-34 text-text-muted font-mono text-sm">
-            <p>Vol: ${formatDollar(asset.volume)}</p>
+          <div className="hidden md:block pt-1 w-28 text-text-muted font-mono text-sm">
+            <p>Vol: ${formatDollarAbbrev(asset.volume)}</p>
           </div>
         ) : (
           <MinusIcon className="text-text-muted size-3" />
@@ -148,4 +148,22 @@ function formatDollar(amount) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 8,
   });
+}
+
+function formatDollarAbbrev(value) {
+  if (value === null || value === undefined) return "-";
+
+  const absValue = Math.abs(Number(value));
+
+  if (absValue >= 1.0e12) {
+    return (value / 1.0e12).toFixed(2) + "T";
+  } else if (absValue >= 1.0e9) {
+    return (value / 1.0e9).toFixed(2) + "B";
+  } else if (absValue >= 1.0e6) {
+    return (value / 1.0e6).toFixed(2) + "M";
+  } else if (absValue >= 1.0e3) {
+    return (value / 1.0e3).toFixed(2) + "K";
+  } else {
+    return value.toString();
+  }
 }
