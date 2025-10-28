@@ -8,6 +8,10 @@ export default function useWatchlists(userId) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    /*
+    Reset watchlists when user signs out to prevent stale/old data 
+    from being displayed
+    */
     if (!userId) {
       setWatchlists([]);
       return;

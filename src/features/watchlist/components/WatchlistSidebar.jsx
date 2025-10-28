@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import PlusButton from "../../../components/PlusButton";
 import WatchlistCard from "./WatchlistCard";

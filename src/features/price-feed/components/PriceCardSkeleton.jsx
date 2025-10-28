@@ -1,8 +1,7 @@
-import React from "react";
 import { useTheme } from "../../../stores/ThemeContext";
 
-function PriceCardSkeleton() {
-  const { theme, setTheme } = useTheme();
+export default function PriceCardSkeleton() {
+  const { theme } = useTheme();
 
   return (
     <div
@@ -32,5 +31,3 @@ function PriceCardSkeleton() {
     </div>
   );
 }
-
-export default PriceCardSkeleton;

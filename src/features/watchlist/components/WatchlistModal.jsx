@@ -66,7 +66,7 @@ export default function WatchlistModal({
           type="text"
           id="name"
           placeholder="Ex: Stocks"
-          className="w-full mb-1 mt-1 p-2 text-text border border-border rounded-lg bg-bg-light"
+          className="w-full mb-1 mt-1 p-2 text-text border border-border-muted hover:border-border focus:border-border rounded-lg bg-bg-light focus:outline-none focus:ring-0 duration-200"
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={MAX_LENGTH_NAME}
@@ -80,7 +80,7 @@ export default function WatchlistModal({
         <textarea
           id="description"
           placeholder="Description (optional)"
-          className="w-full mt-1 p-2 text-text border border-border rounded-lg bg-bg-light"
+          className="w-full mt-1 p-2 text-text border border-border-muted rounded-lg bg-bg-light hover:border-border focus:border-border focus:outline-none focus:ring-0 duration-200"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           maxLength={MAX_LENGTH_DESC}

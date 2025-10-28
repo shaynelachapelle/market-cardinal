@@ -9,6 +9,10 @@ export function NewsFeedProvider({ children }) {
 
   const MAX_PER_CATEGORY = 10;
 
+  /*
+  Function to maintain ordering of articles based on publishing date,
+  ensures ordering is maintained after every new article is inserted through realtime
+  */
   function normalizeArticles(list) {
     const sorted = [...list].sort(
       (a, b) => new Date(b.published_at) - new Date(a.published_at)
@@ -26,7 +30,10 @@ export function NewsFeedProvider({ children }) {
     return Object.values(trimmedByCategory).flat();
   }
 
-  // Initial fetch
+  /*
+  Initially fetch 100 most recent articles regardless of category in order
+  to avoid additional db calls and loading times on change of news category
+  */
   useEffect(() => {
     if (articles.length > 0) return;
 
@@ -46,7 +53,10 @@ export function NewsFeedProvider({ children }) {
 
     fetchArticles();
 
-    // Realtime subscription
+    /*
+    Supabase realtime subscription to keep articles state updated on insert of new 
+    articles in db
+    */
     const channel = supabase
       .channel("articles-changes")
       .on(

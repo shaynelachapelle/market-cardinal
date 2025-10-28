@@ -8,6 +8,10 @@ export default function useWatchlistAssets(userId, watchlistId) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    /*
+    Fetch all user watchlist assets at once to eliminate loading between selection
+    of watchlists, improving smoothness of navigation
+    */
     if (!userId) return;
 
     let cancelled = false;
@@ -160,7 +164,12 @@ export default function useWatchlistAssets(userId, watchlistId) {
     };
   }, [userId]);
 
-  //implement useEffect that updates all watchlist items in user watchlists that are not active
+  /*
+  Due to Alpaca's websocket API free tier limitations, resort to polling for any non-active assets within
+  user's watchlists
+
+  Docs: https://docs.alpaca.markets/docs/streaming-market-data
+  */
   useEffect(() => {
     if (!userId || !watchlistAssets) return;
 

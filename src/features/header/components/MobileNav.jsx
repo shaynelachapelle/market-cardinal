@@ -1,4 +1,3 @@
-// components/Header/MobileNav.jsx
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import ThemeToggle from "../../../components/ThemeToggle";
 import SearchInput from "../../../components/SearchInput";

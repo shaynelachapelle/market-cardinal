@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTheme } from "../../../stores/ThemeContext";
 import {
   EllipsisVerticalIcon,
@@ -7,14 +7,12 @@ import {
   MinusIcon,
 } from "@heroicons/react/24/outline";
 import { supabase } from "../../../app/supabase-client";
-import { useUser } from "../../../stores/UserContext";
 import WatchlistModal from "./WatchlistModal";
 
 export default function WatchlistCard({ watchlist, onSelect, isSelected }) {
   const { theme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-  const { user } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function onDelete(watchlist) {
@@ -47,7 +45,7 @@ export default function WatchlistCard({ watchlist, onSelect, isSelected }) {
           : "shadow-sm"
       } ${
         isSelected
-          ? "border-border bg-bg-dark"
+          ? "border-primary/80 bg-primary/10"
           : "border-border-muted bg-bg-light"
       }`}
     >

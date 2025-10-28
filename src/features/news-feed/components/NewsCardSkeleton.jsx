@@ -1,8 +1,7 @@
-import React from "react";
 import { useTheme } from "../../../stores/ThemeContext";
 
-function NewsCardSkeleton() {
-  const { theme, setTheme } = useTheme();
+export default function NewsCardSkeleton() {
+  const { theme } = useTheme();
 
   return (
     <div
@@ -35,5 +34,3 @@ function NewsCardSkeleton() {
     </div>
   );
 }
-
-export default NewsCardSkeleton;

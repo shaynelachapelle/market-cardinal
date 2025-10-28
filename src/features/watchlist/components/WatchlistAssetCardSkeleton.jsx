@@ -23,9 +23,9 @@ export default function WatchlistAssetCardSkeleton() {
 
         <h3 className="bg-text h-4 w-20 rounded"></h3>
 
-        <p className={`bg-text h-4 w-10 rounded`}></p>
+        <p className="bg-text h-4 w-10 rounded"></p>
 
-        <p className={`bg-text h-4 w-10 rounded`}></p>
+        <p className="bg-text h-4 w-10 rounded"></p>
 
         <div className="hidden md:block h-4 w-34 bg-text rounded">
           <p></p>

@@ -9,10 +9,7 @@ import AssetList from "../../features/watchlist/components/AssetList";
 import WatchlistSidebar from "../../features/watchlist/components/WatchlistSidebar";
 import useWatchlists from "../../features/watchlist/hooks/useWatchlists";
 import useWatchlistAssets from "../../features/watchlist/hooks/useWatchlistAssets";
-import {
-  WatchlistProvider,
-  useWatchlistContext,
-} from "../../features/watchlist/stores/WatchlistContext";
+import { useWatchlistContext } from "../../features/watchlist/stores/WatchlistContext";
 
 export default function WatchlistPage() {
   const { selectedWatchlist, setSelectedWatchlist } = useWatchlistContext();

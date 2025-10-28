@@ -1,4 +1,3 @@
-import React from "react";
 import { useTheme } from "../../../stores/ThemeContext";
 import { useAssetCategory } from "../stores/AssetCategoryContext";
 import { Link } from "react-router-dom";
@@ -7,32 +6,18 @@ import {
   ArrowTrendingUpIcon,
   MinusIcon,
 } from "@heroicons/react/16/solid";
+import {
+  normalizeTicker,
+  formatDollar,
+  formatDollarAbbrev,
+} from "../../../utils/formatters";
+import useLogo from "../../../hooks/useLogo";
 
-function PriceCard({ asset }) {
+export default function PriceCard({ asset }) {
   const { theme } = useTheme();
   const { assetCategory } = useAssetCategory();
 
-  let logo;
-
-  function normalizeTicker(ticker) {
-    return ticker.endsWith("/USD") ? ticker.replace("/USD", "USD") : ticker;
-  }
-
-  if (assetCategory === "Stocks") {
-    logo = `https://img.logo.dev/ticker/${asset.symbol}?token=${
-      import.meta.env.VITE_LOGODEV_KEY
-    }&size=128&retina=true&format=png&theme=${
-      theme === "dark" ? "dark" : "light"
-    }`;
-  } else if (assetCategory === "Crypto") {
-    logo = `https://img.logo.dev/crypto/${normalizeTicker(
-      asset.symbol
-    )}?token=${
-      import.meta.env.VITE_LOGODEV_KEY
-    }&size=128&retina=true&format=png&theme=${
-      theme === "dark" ? "dark" : "light"
-    }`;
-  }
+  const logo = useLogo(asset);
 
   return (
     <Link
@@ -51,7 +36,7 @@ function PriceCard({ asset }) {
           </div>
           <div className="flex flex-col text-left md:gap-1">
             <h3 className="flex flex-row items-center gap-2 text-text font-semibold">
-              {asset.symbol}{" "}
+              <span>{asset.symbol}</span>
               {asset.change > 0 ? (
                 <ArrowTrendingUpIcon className="fill-green-500 size-4" />
               ) : asset.change < 0 ? (
@@ -99,48 +84,3 @@ function PriceCard({ asset }) {
     </Link>
   );
 }
-
-function formatDollar(amount) {
-  const num = Number(amount);
-
-  if (isNaN(num)) return amount;
-
-  if (Math.abs(num) >= 1000) {
-    return num.toLocaleString("en-US", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  }
-
-  if (Math.abs(num) >= 1) {
-    return num.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-  }
-
-  return num.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 8,
-  });
-}
-
-function formatDollarAbbrev(value) {
-  if (value === null || value === undefined) return "-";
-
-  const absValue = Math.abs(Number(value));
-
-  if (absValue >= 1.0e12) {
-    return (value / 1.0e12).toFixed(2) + "T";
-  } else if (absValue >= 1.0e9) {
-    return (value / 1.0e9).toFixed(2) + "B";
-  } else if (absValue >= 1.0e6) {
-    return (value / 1.0e6).toFixed(2) + "M";
-  } else if (absValue >= 1.0e3) {
-    return (value / 1.0e3).toFixed(2) + "K";
-  } else {
-    return value.toString();
-  }
-}
-
-export default PriceCard;

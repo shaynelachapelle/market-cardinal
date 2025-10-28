@@ -1,34 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../app/supabase-client";
-import { useTheme } from "../stores/ThemeContext";
 import { Link } from "react-router-dom";
+import useLogo from "../hooks/useLogo";
+import { normalizeTicker, formatAssetType } from "../utils/formatters";
+import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import Spinner from "./Spinner";
 
 export default function SearchInput() {
-  const { theme } = useTheme();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const wrapperRef = useRef(null);
-
-  function fetchLogo(asset) {
-    if (asset.asset_type === "stocks" || asset.asset_type === "ETFs") {
-      return `https://img.logo.dev/ticker/${asset.symbol}?token=${
-        import.meta.env.VITE_LOGODEV_KEY
-      }&size=128&fallback=monogram&retina=true&format=png&theme=${
-        theme === "dark" ? "dark" : "light"
-      }`;
-    } else if (asset.asset_type === "crypto") {
-      return `https://img.logo.dev/crypto/${normalizeTicker(
-        asset.symbol
-      )}?token=${
-        import.meta.env.VITE_LOGODEV_KEY
-      }&size=128&fallback=monogram&retina=true&format=png&theme=${
-        theme === "dark" ? "dark" : "light"
-      }`;
-    }
-    return "";
-  }
 
   function highlightMatch(text, query) {
     if (!query) return text;
@@ -47,6 +30,9 @@ export default function SearchInput() {
     );
   }
 
+  /*
+  Limit calls to database to every 300ms for queries longer than 1 character to reduce load on db 
+  */
   useEffect(() => {
     if (query.length > 1) {
       setShowDropdown(true);
@@ -89,6 +75,9 @@ export default function SearchInput() {
     };
   }, []);
 
+  /*
+  Prevent background scrolling while search results are displayed to improve UX
+  */
   useEffect(() => {
     if (showDropdown) {
       document.body.style.overflow = "hidden";
@@ -111,17 +100,7 @@ export default function SearchInput() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         ></input>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          className="absolute right-2 top-2 size-5 fill-text"
-        >
-          <path
-            fillRule="evenodd"
-            d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <MagnifyingGlassIcon className="absolute right-2 top-2 size-5 fill-text/50" />
       </div>
 
       {showDropdown && (
@@ -149,7 +128,7 @@ export default function SearchInput() {
                   >
                     <span className="flex flex-row items-center font-semibold">
                       <div className="flex rounded-xl w-6 h-6 bg-none mr-3">
-                        <img className="rounded-xl" src={fetchLogo(item)} />
+                        <img className="rounded-xl" src={useLogo(item)} />
                       </div>
                       <span className="w-20">
                         {highlightMatch(item.symbol, query)}
@@ -168,31 +147,9 @@ export default function SearchInput() {
             </ul>
           ) : loading ? (
             <div className="flex items-center gap-2 px-4 py-2 text-text-muted">
-              <svg
-                className="animate-spin h-5 w-5 text-primary"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="8"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <circle
-                  className="opacity-75"
-                  cx="12"
-                  cy="12"
-                  r="8"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeDasharray="80"
-                  strokeDashoffset="60"
-                />
-              </svg>
+              <div className="size-5">
+                <Spinner />
+              </div>
               Searching...
             </div>
           ) : (
@@ -202,14 +159,4 @@ export default function SearchInput() {
       )}
     </div>
   );
-}
-
-function formatAssetType(type) {
-  return type[type.length - 1] === "s"
-    ? type.slice(0, -1).toUpperCase()
-    : type.toUpperCase();
-}
-
-function normalizeTicker(ticker) {
-  return ticker.endsWith("/USD") ? ticker.replace("/USD", "USD") : ticker;
 }

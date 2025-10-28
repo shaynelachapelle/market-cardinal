@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { supabase } from "../supabase-client";
 import { XMarkIcon } from "@heroicons/react/24/solid";

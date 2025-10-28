@@ -1,4 +1,3 @@
-// components/Header/DesktopNav.jsx
 import ThemeToggle from "../../../components/ThemeToggle";
 import SearchInput from "../../../components/SearchInput";
 import SignInButton from "../../../components/SignInButton";

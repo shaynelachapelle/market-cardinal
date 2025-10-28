@@ -1,18 +1,27 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../../app/supabase-client";
-import { useTheme } from "../../../stores/ThemeContext";
-import { XMarkIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+  XMarkIcon,
+  PlusIcon,
+  TrashIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/16/solid";
 import { useUser } from "../../../stores/UserContext";
 import { DEFAULT_TICKERS } from "../../../config/variables";
+import useLogo from "../../../hooks/useLogo";
+import { formatAssetType } from "../../../utils/formatters";
 
 export default function AssetSearchInput({ onClose, watchlist }) {
-  const { theme } = useTheme();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(DEFAULT_TICKERS);
   const { user } = useUser();
   const [existingAssets, setExistingAssets] = useState([]);
 
   useEffect(() => {
+    /*
+    Collect existing assets in selected watchlist in order to provide
+    user the option of removing existing assets within the search component
+    */
     async function fetchExistingAssets() {
       const { data, error } = await supabase
         .from("watchlist_assets")
@@ -34,25 +43,6 @@ export default function AssetSearchInput({ onClose, watchlist }) {
       document.body.style.overflow = "auto";
     };
   }, []);
-
-  function fetchLogo(asset) {
-    if (asset.asset_type === "stocks" || asset.asset_type === "ETFs") {
-      return `https://img.logo.dev/ticker/${asset.symbol}?token=${
-        import.meta.env.VITE_LOGODEV_KEY
-      }&size=128&retina=true&format=png&theme=${
-        theme === "dark" ? "dark" : "light"
-      }`;
-    } else if (asset.asset_type === "crypto") {
-      return `https://img.logo.dev/crypto/${normalizeTicker(
-        asset.symbol
-      )}?token=${
-        import.meta.env.VITE_LOGODEV_KEY
-      }&size=128&retina=true&format=png&theme=${
-        theme === "dark" ? "dark" : "light"
-      }`;
-    }
-    return "";
-  }
 
   function highlightMatch(text, query) {
     if (!query) return text;
@@ -99,6 +89,9 @@ export default function AssetSearchInput({ onClose, watchlist }) {
     }
   }
 
+  /*
+  Display default tickers when no assets are being searched to improve UX
+  */
   useEffect(() => {
     const delayDebounce = setTimeout(async () => {
       if (query.length > 0) {
@@ -125,34 +118,23 @@ export default function AssetSearchInput({ onClose, watchlist }) {
     <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50">
       <div className="bg-bg p-6 pt-4 rounded-xl border border-border shadow-lg w-full max-w-2xl">
         <h2 className="flex flex-row items-center justify-between text-xl text-text mb-6 cursor-default ">
-          Add symbol(s){" "}
+          <span>Add symbol(s) </span>
           <XMarkIcon
             onClick={onClose}
-            className="size-6 text-text top-5 right-5 cursor-pointer"
+            className="size-8 text-text top-5 right-5 cursor-pointer hover:opacity-80 duration-200"
           />
         </h2>
         <div className="relative w-full">
           <div className="flex flex-row">
             <input
               autoFocus
-              className="border w-full rounded-xl bg-gray-200 p-1 px-2 text-black focus:outline-none focus:ring-0  hover:placeholder-black transition-colors duration-400"
+              className="border border-border w-full rounded-xl bg-bg-light p-1 px-2 text-text focus:outline-none focus:ring-0 transition-colors duration-400"
               type="text"
               placeholder="Search symbols..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             ></input>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="gray-400"
-              className="absolute right-2 top-2 size-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <MagnifyingGlassIcon className="absolute right-2 top-2 size-5 text-text/50" />
           </div>
 
           <div className="flex justify-center mt-2 w-full rounded-xl bg-bg border border-border-muted h-80 overflow-y-auto">
@@ -163,9 +145,8 @@ export default function AssetSearchInput({ onClose, watchlist }) {
                 {results.map((item, index) => (
                   <li
                     key={index}
-                    className={`flex flex-row border-b border-border-muted hover:bg-bg-light text-text px-4 py-2 cursor-default gap-2 ${
-                      index === 0 ? "rounded-t-xl" : ""
-                    } ${
+                    className={`flex flex-row border-b border-border-muted hover:bg-bg-light text-text px-4 py-2 cursor-default gap-2 
+                      ${index === 0 ? "rounded-t-xl" : ""} ${
                       index === results.length - 1
                         ? "rounded-b-xl border-none"
                         : ""
@@ -174,7 +155,7 @@ export default function AssetSearchInput({ onClose, watchlist }) {
                     <div className="flex flex-row justify-between w-full mr-2">
                       <span className="flex flex-row items-center font-semibold">
                         <div className="flex rounded-xl w-6 h-6 bg-none mr-3">
-                          <img className="rounded-xl" src={fetchLogo(item)} />
+                          <img className="rounded-xl" src={useLogo(item)} />
                         </div>
                         <span className="w-20">
                           {highlightMatch(item.symbol, query)}
@@ -207,14 +188,4 @@ export default function AssetSearchInput({ onClose, watchlist }) {
       </div>
     </div>
   );
-}
-
-function formatAssetType(type) {
-  return type[type.length - 1] === "s"
-    ? type.slice(0, -1).toUpperCase()
-    : type.toUpperCase();
-}
-
-function normalizeTicker(ticker) {
-  return ticker.endsWith("/USD") ? ticker.replace("/USD", "USD") : ticker;
 }

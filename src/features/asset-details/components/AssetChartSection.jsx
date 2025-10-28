@@ -45,6 +45,9 @@ export default function AssetChartSection() {
     }
   }, [symbol]);
 
+  /*
+  Chart ranges are currently limited due FMP API free tier limitations
+  */
   const ranges = [
     //"1 day",
     //"5 days",
@@ -103,6 +106,9 @@ export default function AssetChartSection() {
 
   const filteredData = filterByRange(data, range);
 
+  /*
+  Prevent calculating chart fields unless range changes, avoiding redundant recalculations
+  */
   const { high, low, changePercent } = useMemo(() => {
     if (!filteredData.length)
       return { high: null, low: null, changePercent: null };

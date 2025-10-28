@@ -4,11 +4,7 @@ const WatchlistContext = createContext();
 
 export function WatchlistProvider({ children }) {
   const [selectedWatchlist, setSelectedWatchlist] = useState(null);
-
-  // All watchlists for the signed-in user
   const [watchlists, setWatchlists] = useState([]);
-
-  // Assets, keyed by watchlist id
   const [watchlistAssets, setWatchlistAssets] = useState({});
 
   // Restore persisted selected watchlist

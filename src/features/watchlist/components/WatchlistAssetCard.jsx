@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useTheme } from "../../../stores/ThemeContext";
 import { Link } from "react-router-dom";
 import {
@@ -7,26 +6,17 @@ import {
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
 } from "@heroicons/react/16/solid";
+import useLogo from "../../../hooks/useLogo";
+import {
+  normalizeTicker,
+  formatDollar,
+  formatDollarAbbrev,
+} from "../../../utils/formatters";
 
 export default function WatchlistAssetCard({ asset, onDelete }) {
   const { theme } = useTheme();
 
-  const logo =
-    asset.asset_type === "crypto"
-      ? `https://img.logo.dev/crypto/${normalizeTicker(asset.symbol)}?token=${
-          import.meta.env.VITE_LOGODEV_KEY
-        }&size=128&retina=true&format=png&theme=${
-          theme === "dark" ? "dark" : "light"
-        }`
-      : `https://img.logo.dev/ticker/${asset.symbol}?token=${
-          import.meta.env.VITE_LOGODEV_KEY
-        }&size=128&retina=true&format=png&theme=${
-          theme === "dark" ? "dark" : "light"
-        }`;
-
-  function normalizeTicker(ticker) {
-    return ticker.endsWith("/USD") ? ticker.replace("/USD", "USD") : ticker;
-  }
+  const logo = useLogo(asset);
 
   return (
     <Link
@@ -123,47 +113,4 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
       </div>
     </Link>
   );
-}
-
-function formatDollar(amount) {
-  const num = Number(amount);
-
-  if (isNaN(num)) return amount;
-
-  if (Math.abs(num) >= 1000) {
-    return num.toLocaleString("en-US", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  }
-
-  if (Math.abs(num) >= 1) {
-    return num.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-  }
-
-  return num.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 8,
-  });
-}
-
-function formatDollarAbbrev(value) {
-  if (value === null || value === undefined) return "-";
-
-  const absValue = Math.abs(Number(value));
-
-  if (absValue >= 1.0e12) {
-    return (value / 1.0e12).toFixed(2) + "T";
-  } else if (absValue >= 1.0e9) {
-    return (value / 1.0e9).toFixed(2) + "B";
-  } else if (absValue >= 1.0e6) {
-    return (value / 1.0e6).toFixed(2) + "M";
-  } else if (absValue >= 1.0e3) {
-    return (value / 1.0e3).toFixed(2) + "K";
-  } else {
-    return value.toString();
-  }
 }

@@ -1,8 +1,15 @@
 import { useEffect, useRef } from "react";
-import { createChart, LineSeries, AreaSeries } from "lightweight-charts";
+import { createChart, AreaSeries } from "lightweight-charts";
 import { useTheme } from "../../../stores/ThemeContext";
 
-const AssetChart = ({ data, range }) => {
+/*
+Currently using TradingView's Lightweight Charts library to provide
+an out-of-the-box charting UI
+
+Docs: https://tradingview.github.io/lightweight-charts/
+*/
+
+export default function AssetChart({ data, range }) {
   const chartContainerRef = useRef();
   const chartRef = useRef();
   const { theme } = useTheme();
@@ -26,6 +33,8 @@ const AssetChart = ({ data, range }) => {
         secondsVisible: false,
       },
     });
+
+    chartRef.current = chart;
 
     const areaSeries = chart.addSeries(AreaSeries, {
       lineColor: "#2962FF",
@@ -68,6 +77,4 @@ const AssetChart = ({ data, range }) => {
       className="w-full h-full border border-border-muted"
     />
   );
-};
-
-export default AssetChart;
+}

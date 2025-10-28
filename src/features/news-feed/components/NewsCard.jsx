@@ -1,8 +1,7 @@
-import React from "react";
 import { useState } from "react";
 import { useTheme } from "../../../stores/ThemeContext";
 
-function NewsCard({ article }) {
+export default function NewsCard({ article }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const displayTime = timeAgo(article.published_at);
   const { theme, setTheme } = useTheme();
@@ -84,5 +83,3 @@ function timeAgo(dateString) {
   const weeks = Math.floor(days / 7);
   return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
 }
-
-export default NewsCard;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import SignOutButton from "../../../components/SignOutButton";
 import { useUser } from "../../../stores/UserContext";

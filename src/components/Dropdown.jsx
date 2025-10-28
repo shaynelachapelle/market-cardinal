@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
-function Dropdown({ options, selected, onSelect }) {
+export default function Dropdown({ options, selected, onSelect }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -65,5 +65,3 @@ function Dropdown({ options, selected, onSelect }) {
     </div>
   );
 }
-
-export default Dropdown;

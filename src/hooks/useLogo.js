@@ -1,9 +1,14 @@
 import { useTheme } from "../stores/ThemeContext";
+import { normalizeTicker } from "../utils/formatters";
 
-const normalizeTicker = (ticker) =>
-  ticker?.endsWith("/USD") ? ticker.replace("/USD", "USD") : ticker;
+/*
+Fetch asset logo based on ticker and current theme, taking into account asset type
+to hit correct API endpoint
 
-export default function findLogo(asset) {
+Docs: https://docs.logo.dev/logo-images/introduction
+*/
+
+export default function useLogo(asset) {
   const { theme } = useTheme();
 
   return asset?.asset_type === "stocks" || asset?.asset_type === "ETFs"

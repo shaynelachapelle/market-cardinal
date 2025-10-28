@@ -1,4 +1,3 @@
-import React from "react";
 import PlusButton from "../../../components/PlusButton";
 import WatchlistAssetCard from "./WatchlistAssetCard";
 import WatchlistAssetCardSkeleton from "./WatchlistAssetCardSkeleton";

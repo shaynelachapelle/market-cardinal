@@ -3,10 +3,14 @@ import {
   ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/16/solid";
 import { useAssetContext } from "../stores/AssetContext";
+import { formatDollarAbbrev } from "../../../utils/formatters";
 
 export default function AssetAbout() {
   const { details } = useAssetContext();
 
+  /*
+  Change fields displayed to user based on asset type to improve UX
+  */
   const info =
     details?.asset_type === "ETFs"
       ? [
@@ -15,7 +19,7 @@ export default function AssetAbout() {
           { label: "Website", value: details?.website, link: true },
           { label: "Headquarters", value: details?.city },
           { label: "Country", value: details?.country },
-          { label: "IPO Date", value: details?.ipo_date || details?.ipoDate },
+          { label: "IPO Date", value: details?.ipo_date },
         ]
       : [
           { label: "Sector", value: details?.sector },
@@ -24,12 +28,10 @@ export default function AssetAbout() {
           { label: "Website", value: details?.website, link: true },
           { label: "Headquarters", value: details?.city },
           { label: "Country", value: details?.country },
-          { label: "IPO Date", value: details?.ipo_date || details?.ipoDate },
+          { label: "IPO Date", value: details?.ipo_date },
           {
             label: "Employees",
-            value: formatDollarAbbrev(
-              details?.employees || details?.fullTimeEmployees
-            ),
+            value: formatDollarAbbrev(details?.employees),
           },
         ];
 
@@ -64,22 +66,4 @@ export default function AssetAbout() {
       </div>
     </div>
   );
-}
-
-function formatDollarAbbrev(value) {
-  if (value === null || value === undefined) return "-";
-
-  const absValue = Math.abs(Number(value));
-
-  if (absValue >= 1.0e12) {
-    return (value / 1.0e12).toFixed(2) + " T";
-  } else if (absValue >= 1.0e9) {
-    return (value / 1.0e9).toFixed(2) + " B";
-  } else if (absValue >= 1.0e6) {
-    return (value / 1.0e6).toFixed(2) + " M";
-  } else if (absValue >= 1.0e3) {
-    return (value / 1.0e3).toFixed(2) + " K";
-  } else {
-    return value.toString();
-  }
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import { useUser } from "../stores/UserContext";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/16/solid";
 

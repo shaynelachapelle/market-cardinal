@@ -1,8 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useMarketStatus } from "../stores/MarketStatusContext";
 
-function Footer() {
+export default function Footer() {
   const today = new Date();
   const year = today.getFullYear();
   const { isMarketOpen } = useMarketStatus();
@@ -100,5 +99,3 @@ function formatDate(date) {
 
   return `${dayName} ${monthName} ${day}${getOrdinal(day)}, ${year}`;
 }
-
-export default Footer;

@@ -1,9 +1,9 @@
-import { MinusIcon, TrashIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { MinusIcon } from "@heroicons/react/24/outline";
 import { useAssetContext } from "../stores/AssetContext";
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../../app/supabase-client";
-import findLogo from "../../../utils/findLogo";
-import formatDollar from "../../../utils/formatDollar";
+import useLogo from "../../../hooks/useLogo";
+import { formatDollar } from "../../../utils/formatters";
 
 export default function AssetHeader() {
   const { symbol, details, location } = useAssetContext();
@@ -30,6 +30,10 @@ export default function AssetHeader() {
           return;
         }
 
+        /*
+        Due to Alpaca websocket free tier symbol limit (30), resort to polling if symbol is not active
+        Docs: https://docs.alpaca.markets/docs/streaming-market-data
+        */
         if (data?.status) {
           setAsset(data);
           setShouldPoll(false);
@@ -88,11 +92,11 @@ export default function AssetHeader() {
     return () => supabase.removeChannel(channel);
   }, [symbol]);
 
-  const logo = findLogo(asset);
+  const logo = loading ? null : useLogo(asset);
 
   return (
     <div className="flex flex-row gap-10 bg-bg p-8 mx-4 border border-border rounded-lg cursor-default">
-      {loading ? (
+      {!logo ? (
         <div className="skeleton h-42 w-42 rounded-xl bg-text-muted"></div>
       ) : (
         <img src={logo} className="h-42 w-42 rounded-xl" />
@@ -179,8 +183,6 @@ async function fetchStockData(symbol) {
     );
     const json = await res.json();
     const s = json[symbol];
-
-    console.log(s);
 
     if (!s || !s.latestTrade) return;
 
