@@ -76,7 +76,7 @@ export default function PriceCard({ asset }) {
               : asset.percent_change.toFixed(2)}
             %)
           </p>
-          <div className="hidden md:block pt-1 text-text-muted text-xs">
+          <div className="hidden lg:block pt-1 text-text-muted text-xs">
             <p>Vol: ${formatDollarAbbrev(asset.volume)}</p>
           </div>
         </div>

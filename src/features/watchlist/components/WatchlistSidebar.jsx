@@ -15,7 +15,7 @@ export default function WatchlistSidebar({
   const MAX_WATCHLISTS = 6;
 
   return (
-    <div className="col-span-1 md:col-span-1 bg-bg shadow-md border border-border rounded-lg py-3 px-2 md:p-4">
+    <div className="lg:col-span-1 bg-bg shadow-md border border-border rounded-lg py-3 px-2 md:p-4">
       <div className="flex flex-row justify-between items-center mb-3 md:mb-4">
         <h2 className="w-full text-text pl-1 md:pl-0">
           Watchlists{" "}
@@ -25,7 +25,7 @@ export default function WatchlistSidebar({
         </h2>
         <PlusButton
           onClick={onCreateWatchlist}
-          text="Create Watchlist"
+          text="Create watchlist"
           disabled={watchlists.length >= MAX_WATCHLISTS}
           title={
             watchlists.length >= MAX_WATCHLISTS

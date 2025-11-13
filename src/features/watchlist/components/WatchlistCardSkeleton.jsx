@@ -13,7 +13,7 @@ export default function WatchlistCardSkeleton() {
     >
       <div className="flex flex-row justify-between gap-4">
         <div className="flex flex-row justify-center items-center gap-3 md:gap-4">
-          <div className="flex flex-col text-left md:gap-2">
+          <div className="flex flex-col text-left gap-2">
             <div className="flex flex-row w-20 h-3 skeleton rounded bg-text items-center gap-2"></div>
             <p className="w-60 h-4 skeleton rounded bg-text-muted font-light text-sm"></p>
           </div>

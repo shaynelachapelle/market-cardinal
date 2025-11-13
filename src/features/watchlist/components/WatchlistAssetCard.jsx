@@ -29,7 +29,7 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
       }`}
     >
       <div className="flex flex-row items-center justify-between gap-4">
-        <div className="flex flex-row justify-start items-center w-70 gap-3 md:gap-4">
+        <div className="flex flex-row justify-start items-center w-60 lg:w-70 gap-3 md:gap-4">
           <div className="flex w-8 h-8 bg-none">
             <img className="rounded-xl" src={logo} />
           </div>
@@ -44,61 +44,65 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
                 <MinusIcon className="text-text-muted size-3" />
               )}
             </h3>
-            <p className="truncate max-w-28 md:max-w-56 text-text-muted font-light text-sm">
+            <p className="truncate max-w-28 md:max-w-40 lg:max-w-56 text-text-muted font-light text-sm">
               {asset.name}
             </p>
           </div>
         </div>
 
-        {asset.price != null ? (
-          <h3 className="font-semibold font-mono text-text w-10">
-            $
-            {formatDollar(
-              asset.asset_type === "stocks"
-                ? asset.price.toFixed(2)
-                : asset.price
+        <div className="flex flex-col md:flex-row items-end md:justify-between md:gap-30">
+          {asset.price != null ? (
+            <h3 className="font-semibold font-mono text-text w-fit md:w-10">
+              $
+              {formatDollar(
+                asset.asset_type === "stocks"
+                  ? asset.price.toFixed(2)
+                  : asset.price
+              )}
+            </h3>
+          ) : (
+            <MinusIcon className="text-text-muted size-3" />
+          )}
+
+          <div className="flex flex-row items-center gap-3 md:gap-20 lg:gap-30">
+            {asset.change != null ? (
+              <p
+                className={`w-fit md:w-10 font-mono ${
+                  asset.change > 0 ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {asset.change > 0
+                  ? `+${formatDollar(asset.change)}`
+                  : formatDollar(asset.change)}{" "}
+              </p>
+            ) : (
+              <MinusIcon className="text-text-muted size-3" />
             )}
-          </h3>
-        ) : (
-          <MinusIcon className="text-text-muted size-3" />
-        )}
 
-        {asset.change != null ? (
-          <p
-            className={`w-10 font-mono ${
-              asset.change > 0 ? "text-green-500" : "text-red-500"
-            }`}
-          >
-            {asset.change > 0
-              ? `+${formatDollar(asset.change)}`
-              : formatDollar(asset.change)}{" "}
-          </p>
-        ) : (
-          <MinusIcon className="text-text-muted size-3" />
-        )}
+            {asset.change != null && asset.percent_change != null ? (
+              <p
+                className={`w-fit md:w-10 font-mono ${
+                  asset.change > 0 ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {asset.percent_change > 0
+                  ? `+${asset.percent_change.toFixed(2)}`
+                  : asset.percent_change.toFixed(2)}
+                %
+              </p>
+            ) : (
+              <MinusIcon className="text-text-muted size-3" />
+            )}
 
-        {asset.change != null && asset.percent_change != null ? (
-          <p
-            className={`w-10 font-mono ${
-              asset.change > 0 ? "text-green-500" : "text-red-500"
-            }`}
-          >
-            {asset.percent_change > 0
-              ? `+${asset.percent_change.toFixed(2)}`
-              : asset.percent_change.toFixed(2)}
-            %
-          </p>
-        ) : (
-          <MinusIcon className="text-text-muted size-3" />
-        )}
-
-        {asset.volume != null ? (
-          <div className="hidden md:block pt-1 w-28 text-text-muted font-mono text-sm">
-            <p>Vol: ${formatDollarAbbrev(asset.volume)}</p>
+            {asset.volume != null ? (
+              <div className="hidden lg:block pt-1 w-28 text-text-muted font-mono text-sm">
+                <p>Vol: ${formatDollarAbbrev(asset.volume)}</p>
+              </div>
+            ) : (
+              <MinusIcon className="text-text-muted size-3" />
+            )}
           </div>
-        ) : (
-          <MinusIcon className="text-text-muted size-3" />
-        )}
+        </div>
 
         <button
           onClick={(e) => {

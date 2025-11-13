@@ -6,7 +6,7 @@ import { useAssetContext } from "../stores/AssetContext";
 
 export default function AssetChartSection() {
   const [data, setData] = useState([]);
-  const [range, setRange] = useState("5 years");
+  const [range, setRange] = useState("5Y");
   const [loading, setLoading] = useState(true);
   const { symbol } = useAssetContext();
 
@@ -51,11 +51,11 @@ export default function AssetChartSection() {
   const ranges = [
     //"1 day",
     //"5 days",
-    "1 month",
-    "6 months",
-    "Year to date",
-    "1 year",
-    "5 years",
+    "1M",
+    "6M",
+    "YTD",
+    "1Y",
+    "5Y",
     //"All time",
   ];
 
@@ -67,30 +67,30 @@ export default function AssetChartSection() {
     let cutoff;
 
     switch (range) {
-      case "1 day":
+      case "1D":
         cutoff = new Date(now);
         cutoff.setDate(now.getDate() - 1);
         break;
-      case "5 days":
+      case "5D":
         cutoff = new Date(now);
         cutoff.setDate(now.getDate() - 5);
         break;
-      case "1 month":
+      case "1M":
         cutoff = new Date(now);
         cutoff.setMonth(now.getMonth() - 1);
         break;
-      case "6 months":
+      case "6M":
         cutoff = new Date(now);
         cutoff.setMonth(now.getMonth() - 6);
         break;
-      case "Year to date":
+      case "YTD":
         cutoff = new Date(now.getFullYear(), 0, 1);
         break;
-      case "1 year":
+      case "1Y":
         cutoff = new Date(now);
         cutoff.setFullYear(now.getFullYear() - 1);
         break;
-      case "5 years":
+      case "5Y":
         cutoff = new Date(now);
         cutoff.setFullYear(now.getFullYear() - 5);
         break;
@@ -125,11 +125,11 @@ export default function AssetChartSection() {
   }, [filteredData]);
 
   return (
-    <div className="flex flex-col gap-2 bg-bg px-8 py-4 mx-4 border border-border rounded-lg">
+    <div className="flex flex-col gap-2 bg-bg px-3 py-4 md:px-8 mx-2 md:mx-4 border border-border rounded-lg">
       <h3 className="text-text mb-2 font-semibold text-xl">Chart</h3>
       <div className="flex flex-col gap-4">
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row bg-bg-light gap-2 w-fit border border-border-muted rounded-lg flex-wrap">
+        <div className="flex flex-col lg:flex-row justify-between gap-4">
+          <div className="flex flex-row justify-between bg-bg-light px-2 gap-2 w-full md:w-fit border border-border-muted rounded-lg flex-wrap">
             {ranges.map((label) => (
               <button
                 key={label}
@@ -144,28 +144,32 @@ export default function AssetChartSection() {
               </button>
             ))}
           </div>
-          <div className="flex flex-row justify-between min-w-md border border-border-muted rounded-lg flex-wrap gap-8 text-text p-1 px-3 bg-bg-light cursor-default">
-            <p className="flex flex-row items-center gap-2">
-              <span>High: </span>
+          <div className="flex md:flex-row justify-between md:min-w-md border border-border-muted rounded-lg flex-wrap md:gap-8 text-text font-mono p-1 px-3 bg-bg-light cursor-default">
+            <p className="flex flex-col md:flex-row md:items-center md:gap-2">
+              <span className="text-sm md:text-base">High: </span>
               {high ? (
-                <span className="font-semibold font-mono text-lg">{high}</span>
+                <span className="font-mono font-semibold md:text-lg">
+                  {high}
+                </span>
               ) : (
                 <MinusIcon className="size-4" />
               )}
             </p>
-            <p className="flex flex-row items-center gap-2">
-              <span>Low: </span>
+            <p className="flex flex-col md:flex-row md:items-center md:gap-2">
+              <span className="text-sm md:text-base">Low: </span>
               {low ? (
-                <span className="font-semibold font-mono text-lg">{low}</span>
+                <span className="font-mono font-semibold md:text-lg">
+                  {low}
+                </span>
               ) : (
                 <MinusIcon className="size-4" />
               )}
             </p>
-            <p className="flex flex-row items-center gap-2">
-              <span className="">Change: </span>
+            <p className="flex flex-col md:flex-row md:items-center md:gap-2">
+              <span className="text-sm md:text-base">Change: </span>
               {changePercent ? (
                 <span
-                  className={`font-mono font-semibold text-lg
+                  className={`font-mono font-semibold md:text-lg
                   ${changePercent > 0 ? `text-green-500` : `text-red-500`}
                 `}
                 >
@@ -189,7 +193,7 @@ export default function AssetChartSection() {
             <Spinner />
           </div>
           {!loading && filteredData.length === 0 && (
-            <p className="absolute flex flex-row items-center gap-2 opacity-60 text-text-muted top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10">
+            <p className="absolute flex flex-col md:flex-row items-center w-full px-2 text-center md:text-left gap-2 opacity-60 text-text-muted top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10">
               <XCircleIcon className="size-4" />{" "}
               <span>
                 {symbol} chart data is not currently available. Stay tuned for

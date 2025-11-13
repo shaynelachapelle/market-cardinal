@@ -11,8 +11,8 @@ export default function WatchlistModal({
   const [description, setDescription] = useState(watchlist?.description || "");
   const { user } = useUser();
 
-  const MAX_LENGTH_NAME = 50;
-  const MAX_LENGTH_DESC = 150;
+  const MAX_LENGTH_NAME = 25;
+  const MAX_LENGTH_DESC = 100;
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -52,7 +52,7 @@ export default function WatchlistModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center px-3 z-50">
       <div className="bg-bg p-6 rounded-xl border border-border shadow-lg w-full max-w-md">
         <h2 className="text-xl text-text mb-4 cursor-default ">
           {mode === "create" ? "Create New Watchlist" : "Edit Watchlist"}

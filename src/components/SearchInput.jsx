@@ -91,10 +91,10 @@ export default function SearchInput() {
   }, [showDropdown]);
 
   return (
-    <div ref={wrapperRef} className="relative w-fit">
+    <div ref={wrapperRef} className="relative w-full md:w-fit">
       <div className="relative flex flex-row">
         <input
-          className="border border-border-muted rounded-2xl bg-bg-light p-1 px-2 text-text focus:outline-none hover:border-border focus:border-border focus:ring-0 transition-colors duration-400"
+          className="border border-border-muted min-w-full md:min-w-none rounded-2xl bg-bg-light p-1 px-2 text-text focus:outline-none hover:border-border focus:border-border focus:ring-0 transition-colors duration-400"
           type="text"
           placeholder="Search symbols..."
           value={query}
@@ -104,7 +104,7 @@ export default function SearchInput() {
       </div>
 
       {showDropdown && (
-        <div className="absolute mt-1 py-1 w-screen md:w-xl -right-7 md:right-0 rounded-xl bg-bg shadow-lg border border-border max-h-60 overflow-y-auto z-10">
+        <div className="absolute mt-1 py-1 max-w-screen min-w-84 md:w-xl right-0 md:right-0 rounded-xl bg-bg shadow-lg border border-border max-h-60 overflow-y-auto z-10">
           {results.length > 0 ? (
             <ul>
               {results.map((item, index) => (
@@ -118,7 +118,7 @@ export default function SearchInput() {
                   }}
                 >
                   <li
-                    className={`flex flex-row justify-between border-b border-border-muted hover:bg-bg-light text-text px-4 py-2 cursor-pointer gap-2 ${
+                    className={`flex flex-row justify-between border-b border-border-muted hover:bg-bg-light text-text px-3 py-2 md:px-4 cursor-pointer gap-2 ${
                       index === 0 ? "rounded-t-xl" : ""
                     } ${
                       index === results.length - 1
@@ -127,10 +127,10 @@ export default function SearchInput() {
                     }`}
                   >
                     <span className="flex flex-row items-center font-semibold">
-                      <div className="flex rounded-xl w-6 h-6 bg-none mr-3">
+                      <div className="flex rounded-xl size-6 bg-none mr-3">
                         <img className="rounded-xl" src={useLogo(item)} />
                       </div>
-                      <span className="w-20">
+                      <span className="w-14 md:w-20">
                         {highlightMatch(item.symbol, query)}
                       </span>
                       <span className="truncate max-w-32 md:max-w-64 font-normal ml-4">

@@ -58,7 +58,7 @@ export default function WatchlistCard({ watchlist, onSelect, isSelected }) {
               </h3>
             </div>
             {watchlist.description ? (
-              <p className="truncate max-w-28 md:max-w-none md:whitespace-normal text-text-muted font-light text-sm">
+              <p className="truncate max-w-60 md:max-w-120 whitespace-normal text-text-muted font-light text-sm">
                 {watchlist.description}
               </p>
             ) : (

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import SignOutButton from "../../../components/SignOutButton";
 import { useUser } from "../../../stores/UserContext";
+import EmailLabel from "./EmailLabel";
 
 export default function ProfileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,8 +34,7 @@ export default function ProfileMenu() {
             : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <span className="text-text cursor-default">{user.email}</span>
-        <hr className="text-text-muted" />
+        <EmailLabel />
         <SignOutButton />
       </div>
     </div>

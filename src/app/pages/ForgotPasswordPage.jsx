@@ -31,7 +31,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center w-screen h-screen cursor-default">
+    <div className="relative flex flex-col items-center justify-center w-screen h-screen px-3 cursor-default">
       <div
         className={`flex flex-col items-center w-full max-w-md bg-bg border border-border rounded-xl shadow-lg gap-5 p-4 px-8 ${
           theme === "dark" ? "shadow-white/10" : "shadow"

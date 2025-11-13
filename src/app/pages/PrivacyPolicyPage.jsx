@@ -280,7 +280,7 @@ export default function PrivacyPolicyPage() {
         </p>
       </div>
       <Link to="/">
-        <XMarkIcon className="absolute right-6 top-6 text-text size-8 cursor-pointer" />
+        <XMarkIcon className="absolute right-8 lg:right-6 top-12 lg:top-6 text-text size-8 cursor-pointer" />
       </Link>
     </div>
   );

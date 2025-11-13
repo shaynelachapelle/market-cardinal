@@ -115,8 +115,8 @@ export default function AssetSearchInput({ onClose, watchlist }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50">
-      <div className="bg-bg p-6 pt-4 rounded-xl border border-border shadow-lg w-full max-w-2xl">
+    <div className="fixed inset-0 px-3 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50">
+      <div className="bg-bg px-3 py-3 md:p-6 md:pt-4 rounded-xl border border-border shadow-lg w-full max-w-2xl">
         <h2 className="flex flex-row items-center justify-between text-xl text-text mb-6 cursor-default ">
           <span>Add symbol(s) </span>
           <XMarkIcon
@@ -145,7 +145,7 @@ export default function AssetSearchInput({ onClose, watchlist }) {
                 {results.map((item, index) => (
                   <li
                     key={index}
-                    className={`flex flex-row border-b border-border-muted hover:bg-bg-light text-text px-4 py-2 cursor-default gap-2 
+                    className={`flex flex-row border-b border-border-muted hover:bg-bg-light text-text px-2 md:px-4 py-2 cursor-default gap-2 
                       ${index === 0 ? "rounded-t-xl" : ""} ${
                       index === results.length - 1
                         ? "rounded-b-xl border-none"
@@ -157,14 +157,14 @@ export default function AssetSearchInput({ onClose, watchlist }) {
                         <div className="flex rounded-xl w-6 h-6 bg-none mr-3">
                           <img className="rounded-xl" src={useLogo(item)} />
                         </div>
-                        <span className="w-20">
+                        <span className="w-16 md:w-20">
                           {highlightMatch(item.symbol, query)}
                         </span>
                         <span className="truncate max-w-32 md:max-w-64 font-normal ml-4">
                           {highlightMatch(item.name, query)}
                         </span>
                       </span>
-                      <span className="text-text-muted">
+                      <span className="hidden md:block text-text-muted">
                         {formatAssetType(item.asset_type)}
                       </span>
                     </div>

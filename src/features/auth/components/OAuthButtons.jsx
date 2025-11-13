@@ -1,10 +1,10 @@
 export default function OAuthButtons({ onSignIn }) {
   return (
-    <div className="flex flex-row items-center justify-center w-3/4 gap-6">
+    <div className="flex flex-row items-center justify-center w-full gap-6">
       <button
         aria-label="Sign in with Google"
         onClick={() => onSignIn("google")}
-        className="flex items-center gap-2 justify-center bg-bg-light w-full rounded-xl cursor-pointer border border-border-muted hover:border-border p-2 hover:opacity-80 duration-200"
+        className="flex items-center gap-2 justify-center bg-bg-light w-full rounded-lg cursor-pointer border border-border-muted hover:border-border p-2 hover:opacity-80 duration-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

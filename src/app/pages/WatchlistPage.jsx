@@ -52,7 +52,7 @@ export default function WatchlistPage() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-4 px-2 md:px-4 min-h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4 px-2 md:px-4 min-h-screen">
       <WatchlistSidebar
         loading={wlLoading}
         user={user}

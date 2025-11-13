@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useTheme } from "../../../stores/ThemeContext";
+import { ClockIcon } from "@heroicons/react/16/solid";
 
 export default function NewsCard({ article }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const displayTime = timeAgo(article.published_at);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <a
@@ -17,7 +18,7 @@ export default function NewsCard({ article }) {
           : "shadow-sm"
       }`}
     >
-      <div className="flex flex-col justify-between h-58">
+      <div className="flex flex-col justify-between gap-8 md:gap-6 md:h-58">
         <div className="flex flex-col gap-3">
           <h3 className="font-semibold text-text text-lg max-w-xl line-clamp-3">
             {article.title}
@@ -25,35 +26,22 @@ export default function NewsCard({ article }) {
           <p className="text-sm text-text-muted max-w-xl line-clamp-3 mt-1">
             {article.description}
           </p>
-          <p className="text-text-muted font-light text-xs mt-2">
-            {article.source}
-          </p>
         </div>
 
-        <div className="pb-1 md:pb-0 flex flex-col justify-between max-w-xl gap-4">
-          <p className="flex flex-row items-center gap-2 text-text-muted font-light text-xs">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-4"
-            >
-              <path
-                fillRule="evenodd"
-                d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm7.75-4.25a.75.75 0 0 0-1.5 0V8c0 .414.336.75.75.75h3.25a.75.75 0 0 0 0-1.5h-2.5v-3.5Z"
-                clipRule="evenodd"
-              />
-            </svg>
+        <div className="pb-1 md:pb-0 flex flex-row md:flex-col justify-between max-w-xl gap-4 h-full">
+          <p className="text-text-muted font-light text-xs">{article.source}</p>
+          <p className="flex flex-row items-center gap-2 text-text-muted font-light text-xs opacity-80">
+            <ClockIcon className="size-4" />
             {displayTime}
           </p>
         </div>
       </div>
-      <div className="relative flex flex-col items-center justify-center h-full max-w-full md:max-w-1/2">
+      <div className="relative flex flex-col items-end justify-center h-full min-w-full max-w-full md:max-w-1/2 md:min-w-1/2">
         {!imageLoaded && (
-          <div className="absolute inset-0 h-58 md:max-w-96 lg:w-xl rounded-md bg-text-muted skeleton"></div>
+          <div className="absolute right-0 h-58 md:max-w-96 lg:w-xl rounded-md bg-text-muted skeleton"></div>
         )}
         <img
-          className={`h-58 md:max-w-96 lg:w-xl object-cover rounded-md transition-opacity duration-500 ${
+          className={`h-58 w-full md:max-w-96 lg:w-xl object-cover rounded-md transition-opacity duration-500 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           src={article.image}

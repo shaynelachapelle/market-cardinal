@@ -14,7 +14,7 @@ export default function AssetList({
   const MAX_ASSETS = 20;
 
   return (
-    <div className="col-span-2 shadow-md bg-bg border border-border rounded-lg py-3 px-2 md:p-4">
+    <div className="lg:col-span-2 shadow-md bg-bg border border-border rounded-lg py-3 px-2 md:p-4">
       <div className="flex flex-row justify-between items-center mb-3 md:mb-4">
         <h2 className="w-full text-text pl-1 md:pl-0">
           {selectedWatchlist ? selectedWatchlist.name : "Select a watchlist"}
@@ -39,7 +39,7 @@ export default function AssetList({
       </div>
 
       <div
-        className={`flex flex-col items-center gap-4 w-full transition-opacity duration-200 ${
+        className={`flex flex-col items-center text-center gap-4 w-full transition-opacity duration-200 ${
           loading && assets.length > 0 ? "opacity-50" : "opacity-100"
         }`}
       >

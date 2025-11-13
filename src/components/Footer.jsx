@@ -10,36 +10,38 @@ export default function Footer() {
     <div className="flex flex-col justify-between border-t border-border bg-bg px-6 py-4 pb-6 gap-6 cursor-default">
       <div className="flex flex-row justify-between items-center">
         <div>
-          <h2 className="font-heading text-text text-2xl font-bold">
+          <h2 className="font-heading text-text text-xl md:text-2xl font-bold">
             Market Cardinal
           </h2>
-          <h3 className="text-text">{formatDate(new Date())}</h3>
+          <h3 className="text-text text-sm md:text-base">
+            {formatDate(new Date())}
+          </h3>
         </div>
         <div className="group flex items-center space-x-2 text-text-muted bg-bg-light border border-border-muted rounded-lg py-1 px-2">
-          <span className="relative flex h-3 w-3">
+          <span className="relative flex size-3">
             <span
               className={`group-hover:animate-ping absolute inline-flex h-full w-full rounded-full ${
                 isMarketOpen ? "bg-green-500" : "bg-red-500"
               } opacity-50`}
             />
             <span
-              className={`relative inline-flex rounded-full h-3 w-3 ${
+              className={`relative inline-flex rounded-full size-3 ${
                 isMarketOpen ? "bg-green-500" : "bg-red-500"
               } opacity-65`}
             />
           </span>
-          <span className="text-sm font-mono">
+          <span className="text-xs md:text-sm font-mono whitespace-nowrap">
             {isMarketOpen ? "Market Open" : "Market Closed"}
           </span>
         </div>
       </div>
-      <hr className="w-full text-text-muted" />
-      <div className="flex flex-row justify-between text-text-muted text-xs">
+      <hr className="w-full text-text-muted opacity-80" />
+      <div className="flex flex-col md:flex-row gap-4 justify-between items-center text-text-muted text-xs">
         <a href="https://logo.dev" className="hover:opacity-80 duration-200">
           Logos provided by Logo.dev
         </a>
         <p>©{year} Market Cardinal, Copyright All Rights Reserved.</p>
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row justify-between gap-4 mx-auto md:mx-0">
           <Link to="/privacy" className="hover:opacity-80 duration-200">
             Privacy Policy
           </Link>
