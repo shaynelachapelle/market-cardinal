@@ -193,7 +193,7 @@ export default function AssetChartSection() {
             <Spinner />
           </div>
           {!loading && filteredData.length === 0 && (
-            <p className="absolute flex flex-col md:flex-row items-center w-full px-2 text-center md:text-left gap-2 opacity-60 text-text-muted top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10">
+            <p className="absolute flex flex-col md:flex-row justify-center items-center w-full px-2 text-center md:text-left gap-2 opacity-60 text-text-muted top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10">
               <XCircleIcon className="size-4" />{" "}
               <span>
                 {symbol} chart data is not currently available. Stay tuned for

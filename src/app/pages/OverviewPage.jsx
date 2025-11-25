@@ -62,17 +62,20 @@ export default function OverviewPage() {
           <h2 className="w-full text-text font-semibold pl-1 mb-2 md:pl-0">
             Top Stocks
           </h2>
-          {/*<Dropdown
+          {/*
+          TODO: Implement crypto price feed
+          <Dropdown
             options={["Stocks", "Crypto"]}
             selected={assetCategory}
             onSelect={(value) => setAssetCategory(value)}
-          />*/}
+          />
+          */}
         </div>
         <PriceFeed />
       </div>
 
       <button
-        className="fixed flex flex-row lg:hidden gap-2 items-center bottom-4 right-3 shadow text-text w-fit font-semibold bg-bg-light border border-primary/80 rounded py-1 px-2 z-10"
+        className="fixed flex flex-row lg:hidden gap-2 items-center bottom-4 right-3 shadow text-text w-fit font-semibold bg-bg-light border border-primary/80 rounded py-2 px-3 z-10"
         onClick={handleJump}
       >
         <span className="relative top-[-2px]">

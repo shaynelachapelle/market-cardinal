@@ -97,7 +97,6 @@ export default function useWatchlistAssets(userId, watchlistId) {
           }
 
           if (payload.eventType === "UPDATE" && payload.new) {
-            const wlId = payload.new.watchlist_id;
             setWatchlistAssets((prev) => {
               const updated = { ...prev };
               const wlId = payload.new.watchlist_id;

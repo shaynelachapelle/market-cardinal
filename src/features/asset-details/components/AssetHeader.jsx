@@ -126,7 +126,7 @@ export default function AssetHeader() {
           </div>
         </div>
 
-        <div className="flex flex-row items-center md:justify-between gap-5">
+        <div className="flex flex-row items-center gap-5">
           {asset?.price && !loading ? (
             <div className="flex flex-row items-end gap-2 text-text">
               <p className="font-mono text-3xl md:text-5xl">

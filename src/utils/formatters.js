@@ -42,7 +42,7 @@ Returns dollar abbreviation string based on size of number input
 e.g., 3,200,123,323 -> 3.20B, 11,2301 -> 11.23K
 */
 export function formatDollarAbbrev(value) {
-  if (value === null || value === undefined) return "-";
+  if (value === null || value === undefined) return "";
 
   const absValue = Math.abs(Number(value));
 

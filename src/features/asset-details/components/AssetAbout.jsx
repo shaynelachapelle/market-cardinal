@@ -10,32 +10,24 @@ export default function AssetAbout() {
   const { details } = useAssetContext();
   const [showMore, setShowMore] = useState(false);
 
+  const MAX_CHAR_COUNT = 350;
+
   /*
-  Change fields displayed to user based on asset type to improve UX
+  TODO: Change fields displayed to user based on asset type to improve UX 
   */
-  const info =
-    details?.asset_type === "ETFs"
-      ? [
-          { label: "Sector", value: details?.sector },
-          { label: "Industry", value: details?.industry },
-          { label: "Website", value: details?.website, link: true },
-          { label: "Headquarters", value: details?.city },
-          { label: "Country", value: details?.country },
-          { label: "IPO Date", value: details?.ipo_date },
-        ]
-      : [
-          { label: "Sector", value: details?.sector },
-          { label: "Industry", value: details?.industry },
-          { label: "CEO", value: details?.ceo },
-          { label: "Website", value: details?.website, link: true },
-          { label: "Headquarters", value: details?.city },
-          { label: "Country", value: details?.country },
-          { label: "IPO Date", value: details?.ipo_date },
-          {
-            label: "Employees",
-            value: formatDollarAbbrev(details?.employees),
-          },
-        ];
+  const info = [
+    { label: "Sector", value: details?.sector },
+    { label: "Industry", value: details?.industry },
+    { label: "CEO", value: details?.ceo },
+    { label: "Website", value: details?.website, link: true },
+    { label: "Headquarters", value: details?.city },
+    { label: "Country", value: details?.country },
+    { label: "IPO Date", value: details?.ipo_date },
+    {
+      label: "Employees",
+      value: formatDollarAbbrev(details?.employees),
+    },
+  ];
 
   function handleClick() {
     setShowMore(!showMore);
@@ -52,19 +44,21 @@ export default function AssetAbout() {
           >
             <p className="font-semibold">{label}</p>
             {!value ? (
-              <MinusIcon className="size-6 text-text-muted" />
+              <MinusIcon className="size-4 text-text-muted" />
             ) : link ? (
               <a
                 href={value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-row gap-2 justify-center items-center text-base md:text-xl text-primary hover:opacity-80 duration-200"
+                className="flex flex-row gap-2 justify-center items-center text-base truncate max-w-60 md:max-w-none md:text-xl text-primary hover:opacity-80 duration-200"
               >
                 <span className="truncate max-w-100">{value}</span>
                 <ArrowTopRightOnSquareIcon className="size-4" />
               </a>
             ) : (
-              <p className="text-base md:text-xl">{value}</p>
+              <p className="text-base truncate max-w-60 md:max-w-none md:text-xl">
+                {value}
+              </p>
             )}
           </div>
         ))}
@@ -75,12 +69,14 @@ export default function AssetAbout() {
           <span className={`${showMore ? "line-clamp-none" : "line-clamp-3"}`}>
             {details?.description}
           </span>
-          <button
-            onClick={handleClick}
-            className="text-primary font-medium hover:opacity-80 duration-200 cursor-pointer"
-          >
-            {showMore ? "Show Less" : "Show More"}
-          </button>
+          {details?.description.length > MAX_CHAR_COUNT && (
+            <button
+              onClick={handleClick}
+              className="text-primary font-medium hover:opacity-80 duration-200 cursor-pointer"
+            >
+              {showMore ? "Show Less" : "Show More"}
+            </button>
+          )}
         </p>
       </div>
     </div>

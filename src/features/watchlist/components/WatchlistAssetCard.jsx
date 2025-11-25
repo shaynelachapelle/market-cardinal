@@ -44,13 +44,13 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
                 <MinusIcon className="text-text-muted size-3" />
               )}
             </h3>
-            <p className="truncate max-w-28 md:max-w-40 lg:max-w-56 text-text-muted font-light text-sm">
+            <p className="truncate max-w-28 md:max-w-40 2xl:max-w-56 text-text-muted font-light text-sm">
               {asset.name}
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-end md:justify-between md:gap-30">
+        <div className="flex flex-col md:flex-row items-end md:justify-between md:gap-20 2xl:gap-30">
           {asset.price != null ? (
             <h3 className="font-semibold font-mono text-text w-fit md:w-10">
               $
@@ -64,7 +64,7 @@ export default function WatchlistAssetCard({ asset, onDelete }) {
             <MinusIcon className="text-text-muted size-3" />
           )}
 
-          <div className="flex flex-row items-center gap-3 md:gap-20 lg:gap-30">
+          <div className="flex flex-row items-center gap-3 md:gap-20 2xl:gap-30">
             {asset.change != null ? (
               <p
                 className={`w-fit md:w-10 font-mono ${

@@ -47,7 +47,7 @@ async function loadPreviousClose() {
 function schedulePrevCloseRefresh() {
   async function scheduleNextRun() {
     const now = DateTime.now().setZone("America/New_York");
-    let nextRun = now.set({ hour: 16, minute: 0, second: 0, millisecond: 0 });
+    let nextRun = now.set({ hour: 9, minute: 29, second: 30, millisecond: 0 });
 
     if (now.weekday <= 5) {
       // Only schedule on weekdays
@@ -62,9 +62,7 @@ function schedulePrevCloseRefresh() {
     console.log(`Next previous_close refresh scheduled for ${nextRun.toISO()}`);
 
     setTimeout(async () => {
-      console.log(
-        "Market close detected — refreshing previous_close values..."
-      );
+      console.log("Refreshing previous_close values...");
       await loadPreviousClose();
       scheduleNextRun();
     }, delay);
@@ -129,6 +127,7 @@ async function updatePrice(symbol, price, updatedAt) {
 }
 */
 
+//TODO: fix volume calculation
 async function updateVolume(symbol, price, volume, updatedAt) {
   const vol = price * volume;
 
@@ -182,11 +181,17 @@ async function startWebSocket() {
         );
       }
 
+      /*
+      Calculate volume based on daily bars
+      */
       if (msg.T === "d") {
         const { S: symbol, v: volume, vw: price, t: time } = msg;
         await updateVolume(symbol, price, volume, time);
       }
 
+      /*
+      Collect price updates on every trade, update every second to avoid excessive database calls
+      */
       if (msg.T === "t") {
         const { S: symbol, p: price, t: time } = msg;
         bufferUpdate(symbol, price, time);
