@@ -50,3 +50,13 @@ export const DEFAULT_TICKERS = [
   { symbol: "AVAX/USD", name: "Avalanche USD", asset_type: "crypto" },
    */
 ];
+
+export const TICKERBAR_ASSETS = [
+  { symbol: "SPY" },
+  { symbol: "QQQ" },
+  { symbol: "DIA" },
+  { symbol: "GLD" },
+  { symbol: "SLV" },
+  { symbol: "IBIT" },
+  { symbol: "USO" },
+];

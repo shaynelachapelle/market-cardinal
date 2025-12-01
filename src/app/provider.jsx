@@ -7,23 +7,26 @@ import { PriceFeedProvider } from "../features/price-feed/stores/PriceFeedContex
 import { NewsFeedProvider } from "../features/news-feed/stores/NewsFeedContext";
 import { MarketStatusProvider } from "../stores/MarketStatusContext";
 import { AssetContextProvider } from "../features/asset-details/stores/AssetContext";
+import { TickerBarProvider } from "../features/tickerbar/stores/TickerBarContext";
 
 export function Provider({ children }) {
   return (
     <ThemeProvider>
       <UserProvider>
         <MarketStatusProvider>
-          <WatchlistProvider>
-            <NewsCategoryProvider>
-              <AssetCategoryProvider>
-                <PriceFeedProvider>
-                  <NewsFeedProvider>
-                    <AssetContextProvider>{children}</AssetContextProvider>
-                  </NewsFeedProvider>
-                </PriceFeedProvider>
-              </AssetCategoryProvider>
-            </NewsCategoryProvider>
-          </WatchlistProvider>
+          <TickerBarProvider>
+            <WatchlistProvider>
+              <NewsCategoryProvider>
+                <AssetCategoryProvider>
+                  <PriceFeedProvider>
+                    <NewsFeedProvider>
+                      <AssetContextProvider>{children}</AssetContextProvider>
+                    </NewsFeedProvider>
+                  </PriceFeedProvider>
+                </AssetCategoryProvider>
+              </NewsCategoryProvider>
+            </WatchlistProvider>
+          </TickerBarProvider>
         </MarketStatusProvider>
       </UserProvider>
     </ThemeProvider>
