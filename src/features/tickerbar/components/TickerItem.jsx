@@ -37,11 +37,11 @@ export default function TickerItem({ asset }) {
         }
       >
         <span>
-          {asset.change > 0 ? "+" : asset.change < 0 ? "-" : ""}
+          {asset.change > 0 ? "+" : ""}
           {formatDollar(asset.change)}{" "}
         </span>
         <span>
-          ({asset.change > 0 ? "+" : asset.change < 0 ? "-" : ""}
+          ({asset.change > 0 ? "+" : ""}
           {asset.percent_change?.toFixed(2)}%)
         </span>
       </p>

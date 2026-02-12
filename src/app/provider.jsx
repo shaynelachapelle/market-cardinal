@@ -8,26 +8,29 @@ import { NewsFeedProvider } from "../features/news-feed/stores/NewsFeedContext";
 import { MarketStatusProvider } from "../stores/MarketStatusContext";
 import { AssetContextProvider } from "../features/asset-details/stores/AssetContext";
 import { TickerBarProvider } from "../features/tickerbar/stores/TickerBarContext";
+import { ScrollHideProvider } from "../stores/ScrollHideContext";
 
 export function Provider({ children }) {
   return (
     <ThemeProvider>
       <UserProvider>
-        <MarketStatusProvider>
-          <TickerBarProvider>
-            <WatchlistProvider>
-              <NewsCategoryProvider>
-                <AssetCategoryProvider>
-                  <PriceFeedProvider>
-                    <NewsFeedProvider>
-                      <AssetContextProvider>{children}</AssetContextProvider>
-                    </NewsFeedProvider>
-                  </PriceFeedProvider>
-                </AssetCategoryProvider>
-              </NewsCategoryProvider>
-            </WatchlistProvider>
-          </TickerBarProvider>
-        </MarketStatusProvider>
+        <ScrollHideProvider>
+          <MarketStatusProvider>
+            <TickerBarProvider>
+              <WatchlistProvider>
+                <NewsCategoryProvider>
+                  <AssetCategoryProvider>
+                    <PriceFeedProvider>
+                      <NewsFeedProvider>
+                        <AssetContextProvider>{children}</AssetContextProvider>
+                      </NewsFeedProvider>
+                    </PriceFeedProvider>
+                  </AssetCategoryProvider>
+                </NewsCategoryProvider>
+              </WatchlistProvider>
+            </TickerBarProvider>
+          </MarketStatusProvider>
+        </ScrollHideProvider>
       </UserProvider>
     </ThemeProvider>
   );

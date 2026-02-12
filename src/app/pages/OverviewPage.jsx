@@ -31,7 +31,7 @@ export default function OverviewPage() {
   function handleJump() {
     const target = isBottomVisible ? newsRef.current : assetsRef.current;
 
-    const headerOffset = 80 + 16; //header height + margin
+    const headerOffset = 80 + 16 + 57; //header height + margin + tickerbar
     const elementPosition = target.getBoundingClientRect().top + window.scrollY;
     const offsetPosition = elementPosition - headerOffset;
 

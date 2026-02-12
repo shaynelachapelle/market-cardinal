@@ -3,12 +3,18 @@ import { Bars3Icon } from "@heroicons/react/24/solid";
 import Logo from "../../../components/Logo";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
+import { useScrollHide } from "../../../stores/ScrollHideContext";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { hidden } = useScrollHide();
 
   return (
-    <div className="sticky top-0 z-20 flex flex-row border-b border-border shadow items-center justify-between bg-bg max-w-screen h-20 px-3 md:px-6">
+    <div
+      className={`sticky top-0 z-20 flex flex-row border-b border-border shadow items-center justify-between bg-bg max-w-screen h-20 px-3 md:px-6 transition-transform duration-400 ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       <Logo />
       <DesktopNav />
       <button
