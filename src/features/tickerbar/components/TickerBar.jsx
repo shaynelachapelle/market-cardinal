@@ -30,15 +30,15 @@ export default function TickerBar() {
 
   return (
     <div
-      className={`sticky top-20 z-10 h-[57px] overflow-hidden bg-bg-light flex whitespace-nowrap border-b border-border cursor-default transition-transform duration-400 ${
+      className={`fixed top-20 z-10 h-[57px] overflow-hidden bg-bg-light flex whitespace-nowrap border-b border-border cursor-default transition-transform duration-400 ${
         hidden ? "-translate-y-[80px]" : "translate-y-0"
       }`}
     >
-      <ul className="flex gap-10 py-4 animate-infinite-scroll hover:[animation-play-state:paused]">
+      <div className="flex gap-10 py-4 animate-infinite-scroll hover:[animation-play-state:paused]">
         {[...assets, ...assets].map((asset, key) => (
           <TickerItem key={key} asset={asset} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

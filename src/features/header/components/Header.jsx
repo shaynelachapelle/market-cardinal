@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <div
-      className={`sticky top-0 z-20 flex flex-row border-b border-border shadow items-center justify-between bg-bg max-w-screen h-20 px-3 md:px-6 transition-transform duration-400 ${
+      className={`fixed top-0 z-20 flex items-center justify-between bg-bg h-20 px-3 md:px-6 border-b border-border w-full max-w-full transition-transform duration-400 ${
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >

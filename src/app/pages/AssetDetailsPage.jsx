@@ -5,7 +5,8 @@ import AssetAbout from "../../features/asset-details/components/AssetAbout";
 
 export default function AssetDetailsPage() {
   return (
-    <div className="max-w-screen flex flex-col gap-4 my-4">
+    <div className="max-w-screen flex flex-col gap-4 my-4 pt-[80px]">
+      {/*TODO: remove hardcoded header height*/}
       <AssetHeader />
       <AssetChartSection />
       <AssetStats />

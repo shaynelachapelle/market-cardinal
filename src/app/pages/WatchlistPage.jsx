@@ -23,7 +23,7 @@ export default function WatchlistPage() {
   const { watchlists, loading: wlLoading } = useWatchlists(user?.id);
   const { assets, loading: assetsLoading } = useWatchlistAssets(
     user?.id,
-    selectedWatchlist?.id
+    selectedWatchlist?.id,
   );
 
   useEffect(() => {
@@ -52,7 +52,8 @@ export default function WatchlistPage() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4 px-2 md:px-4 min-h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4 px-2 md:px-4 min-h-screen pt-[80px]">
+      {/*TODO: remove hardcoded header height*/}
       <WatchlistSidebar
         loading={wlLoading}
         user={user}

@@ -22,7 +22,7 @@ export default function OverviewPage() {
       ([entry]) => {
         setIsBottomVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
     if (assetsRef.current) observer.observe(assetsRef.current);
     return () => observer.disconnect();
@@ -39,7 +39,9 @@ export default function OverviewPage() {
   }
 
   return (
-    <div>
+    <div className="pt-[137px]">
+      {/*header height + tickerbar*/}
+      {/*TODO: remove hardcoded value*/}
       <TickerBar />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4 px-2 lg:px-4 min-h-screen">
         <div
@@ -79,6 +81,7 @@ export default function OverviewPage() {
           <PriceFeed />
         </div>
 
+        {/* jump navigation button for mobile & tablets */}
         <button
           className="fixed flex flex-row lg:hidden gap-2 items-center bottom-4 right-3 shadow text-text w-fit font-semibold bg-bg-light border border-primary/80 rounded py-2 px-3 z-10"
           onClick={handleJump}
