@@ -4,9 +4,11 @@ A modern financial news and market data platform that aggregates headlines from 
 
 Link: https://www.marketcardinal.com/
 
-Market Cardinal is split up into three seperate deployables, a web client, a Supabase backend, and a simple WebSocket server.
+_Market Cardinal_ is split up into three seperate deployables, a web client, a Supabase backend, and a simple WebSocket server.
 
-**Note**: The WebSocket server is currently offline due to hosting (Railway) free tier restrictions. Live price data is currently paused.
+![Architecture Diagram](market_cardinal_architecture_clean.png)
+
+**Note**: The WebSocket server is currently offline due to hosting ([Railway](https://railway.com/)) free tier restrictions. Live price data is currently paused.
 
 ## How It's Made
 
@@ -44,9 +46,12 @@ I created simple cron jobs for database maintenance, deleting old records that w
 
 ## Screenshots
 
+### Homepage
 ![Overview Screenshot 1](mc-overview-preview.png)
 
 ![Overview Screenshot 2](mc-overview-search-preview.png)
+
+### Watchlists
 
 ![Watchlist Screenshot](mc-watchlists-preview.png)
 
@@ -54,12 +59,16 @@ I created simple cron jobs for database maintenance, deleting old records that w
 
 ![Watchlist Add Screenshot](mc-watchlist-add-preview.png)
 
+### Asset Info
+
 ![Asset Details Screenshot 1](mc-asset-details-preview-1.png)
 
 ![Asset Details Screenshot 2](mc-asset-details-preview-2.png)
+
+### Account Creation
 
 ![Authentication Screenshot](mc-auth-preview.png)
 
 ## Authors
 
-- [@shaynelachapelle](https://github.com/shaynelachapelle)
+- [@shaynelachapelle](https://github.com/shaynelachapelle) ;)
